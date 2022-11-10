@@ -2,7 +2,7 @@
 # This file is part of snmpclitools software.
 #
 # Copyright (c) 2005-2019, Ilya Etingof <etingof@gmail.com>
-# License: http://snmplabs.com/snmpclitools/license.html
+# License: https://www.pysnmp.com/snmpclitools/license.html
 #
 # C/L interface to MIB variables. Mimics Net-SNMP CLI.
 #
@@ -17,8 +17,8 @@ from pysnmp.smi import compiler
 
 from snmpclitools.cli import base
 
-DEFAULT_MIB_SOURCE_URL = 'http://mibs.snmplabs.com/asn1/@mib@'
-DEFAULT_MIB_BORROWER_URL = 'http://mibs.snmplabs.com/pysnmp/fulltexts/@mib@'
+DEFAULT_MIB_SOURCE_URL = 'https://mibs.pysnmp.com/asn1/@mib@'
+DEFAULT_MIB_BORROWER_URL = 'https://mibs.pysnmp.com/pysnmp/fulltexts/@mib@'
 
 
 def getUsage():

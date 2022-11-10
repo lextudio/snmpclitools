@@ -2,7 +2,7 @@
 # This file is part of snmpclitools software.
 #
 # Copyright (c) 2005-2019, Ilya Etingof <etingof@gmail.com>
-# License: http://snmplabs.com/snmpclitools/license.html
+# License: https://www.pysnmp.com/snmpclitools/license.html
 #
 import sys
 
@@ -40,7 +40,7 @@ from snmpclitools.cli import base
 def getUsage():
     return """\
 SNMP management tools %s, written by Ilya Etingof <etingof@gmail.com>
-Software documentation and support at http://snmplabs.com
+Software documentation and support at https://www.pysnmp.com
 Foundation libraries: pysmi %s, pysnmp %s, pyasn1 %s
 Python interpreter: %s
 Debugging options:

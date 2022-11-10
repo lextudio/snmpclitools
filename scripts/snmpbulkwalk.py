@@ -2,7 +2,7 @@
 # This file is part of snmpclitools software.
 #
 # Copyright (c) 2005-2019, Ilya Etingof <etingof@gmail.com>
-# License: http://snmplabs.com/snmpclitools/license.html
+# License: https://www.pysnmp.com/snmpclitools/license.html
 #
 # GETBULK command generator
 #

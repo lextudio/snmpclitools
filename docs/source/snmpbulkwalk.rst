@@ -154,13 +154,13 @@ require MIB access.
 
 .. code-block:: bash
 
-    $ snmpbulkwalk.py -v2c -c public demo.snmplabs.com TCP-MIB::tcpRtoMin
+    $ snmpbulkwalk.py -v2c -c public demo.pysnmp.com TCP-MIB::tcpRtoMin
     TCP-MIB::tcpRtoMin.0 = Integer32: 200 milliseconds
     $
-    $ snmpbulkwalk.py -v2c -c public demo.snmplabs.com 1.3.6.1.2.1.6.2
+    $ snmpbulkwalk.py -v2c -c public demo.pysnmp.com 1.3.6.1.2.1.6.2
     1.3.6.1.2.1.6.2.0 = Integer32: 200 milliseconds
     $
-    $ snmpbulkwalk.py  -v2c -c public demo.snmplabs.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"
+    $ snmpbulkwalk.py  -v2c -c public demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"
     TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389" = Integer32: 'established'
 
 If only MIB name is given, the first MIB object in that MIB will be taken
@@ -168,7 +168,7 @@ as object name
 
 .. code-block:: bash
 
-    $ snmpbulkwalk.py -v2c -c public demo.snmplabs.com TCP-MIB::
+    $ snmpbulkwalk.py -v2c -c public demo.pysnmp.com TCP-MIB::
     TCP-MIB::tcpRtoAlgorithm.0 = Integer32: 'other'
     TCP-MIB::tcpRtoMin.0 = Integer32: 200 milliseconds
     ...
@@ -178,7 +178,7 @@ them all at the command line.
 
 .. code-block:: bash
 
-    $ snmpbulkwalk.py  -v2c -c public demo.snmplabs.com TCP-MIB:: IF-MIB::
+    $ snmpbulkwalk.py  -v2c -c public demo.pysnmp.com TCP-MIB:: IF-MIB::
     TCP-MIB::tcpRtoAlgorithm.0 = Integer32: 'other'
     IF-MIB::ifNumber.0 = Integer32: 2
     TCP-MIB::tcpRtoMin.0 = Integer32: 200 milliseconds

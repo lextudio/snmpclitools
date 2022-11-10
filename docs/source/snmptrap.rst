@@ -337,7 +337,7 @@ The following command will send SNMP v1 TRAP message:
 
 .. code-block:: bash
 
-   snmptrap.py -v1 -c public demo.snmplabs.com 1.3.6.1.4.1.20408.4.1.1.2 \
+   snmptrap.py -v1 -c public demo.pysnmp.com 1.3.6.1.4.1.20408.4.1.1.2 \
        0.0.0.0 1 0 0 1.3.6.1.2.1.1.1.0 s "my system"
 
 SNMPv2c TRAP example
@@ -352,7 +352,7 @@ The following command will send SNMP v2c TRAP message:
 
 .. code-block:: bash
 
-   snmptrap.py -v2c -c public demo.snmplabs.com 123 1.3.6.1.6.3.1.1.5.1 \
+   snmptrap.py -v2c -c public demo.pysnmp.com 123 1.3.6.1.6.3.1.1.5.1 \
     SNMPv2-MIB::sysName.0 = "my system"
 
 SNMPv3 TRAP example
@@ -369,7 +369,7 @@ The following command will send SNMP v3 TRAP message:
 .. code-block:: bash
 
    snmptrap.py -v3 -e 8000000001020304 -l authPriv -u usr-sha-aes \
-   -A authkey1 -X privkey1 -a SHA -x AES demo.snmplabs.com 12345 \
+   -A authkey1 -X privkey1 -a SHA -x AES demo.pysnmp.com 12345 \
        1.3.6.1.4.1.20408.4.1.1.2 SNMPv2-MIB::sysName.0 = "my system"
 
 .. note::

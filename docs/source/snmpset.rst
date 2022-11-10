@@ -126,10 +126,10 @@ specify SNMP value type by hand.
 
 .. code-block:: bash
 
-    $ snmpset.py -v2c -c private demo.snmplabs.com IF-MIB::ifAdminStatus."1" = 'up'
+    $ snmpset.py -v2c -c private demo.pysnmp.com IF-MIB::ifAdminStatus."1" = 'up'
     IF-MIB::ifAdminStatus."1" = Integer32: 'up'
     $
-    $ snmpset.py -v2c -c private demo.snmplabs.com 1.3.6.1.2.1.2.2.1.7.1 i 1
+    $ snmpset.py -v2c -c private demo.pysnmp.com 1.3.6.1.2.1.2.2.1.7.1 i 1
     1.3.6.1.2.1.6.2.0 = Integer32: 1
 
 You can address many MIB objects by a single SNMP SET request by specifying
@@ -137,7 +137,7 @@ them all at the command line.
 
 .. code-block:: bash
 
-    $ snmpset.py -v2c -c private demo.snmplabs.com IF-MIB::ifAdminStatus."1" = 'up' \
+    $ snmpset.py -v2c -c private demo.pysnmp.com IF-MIB::ifAdminStatus."1" = 'up' \
         IF-MIB::ifAdminStatus."2" = 'down'
     IF-MIB::ifAdminStatus."1" = Integer32: 'up'
     IF-MIB::ifAdminStatus."2" = Integer32: 'down'
@@ -151,12 +151,12 @@ SNMPv1 SET example
 The following command will send SNMP v1 SET message:
 
 * with SNMPv1, community 'public'
-* to an Agent at demo.snmplabs.com:161
+* to an Agent at demo.pysnmp.com:161
 * setting some MIB objects to the new values
 
 .. code-block:: bash
 
-   snmpset.py -v1 -c public demo.snmplabs.com \
+   snmpset.py -v1 -c public demo.pysnmp.com \
        1.3.6.1.2.1.1.9.1.2.1 = 1.3.6.1.4.1.20408.1.1 \
        1.3.6.1.2.1.1.9.1.3.1 s "new system name"
 
@@ -166,12 +166,12 @@ SNMPv2c SET example
 The following command will send SNMP v2c SET message:
 
 * with SNMPv2c, community 'public'
-* to an Agent at demo.snmplabs.com:161
+* to an Agent at demo.pysnmp.com:161
 * setting some MIB objects to the new values
 
 .. code-block:: bash
 
-   snmpset.py -v2c -c public demo.snmplabs.com \
+   snmpset.py -v2c -c public demo.pysnmp.com \
        1.3.6.1.2.1.1.9.1.2.1 = 1.3.6.1.4.1.20408.1.1 \
        1.3.6.1.2.1.1.9.1.3.1 s "new system name"
 
@@ -181,12 +181,12 @@ SNMPv3 SET example
 The following command will send SNMP v3 SET message:
 
 * with SNMPv3, user 'usr-md5-des', MD5 authentication, DES encryption
-* to an Agent at demo.snmplabs.com:161
+* to an Agent at demo.pysnmp.com:161
 * setting some MIB objects to the new values
 
 .. code-block:: bash
 
    snmpset.py -v3 -l authPriv -u usr-md5-des -A authkey1 -X privkey1 \
-       demo.snmplabs.com \
+       demo.pysnmp.com \
        1.3.6.1.2.1.1.9.1.2.1 = 1.3.6.1.4.1.20408.1.1 \
        1.3.6.1.2.1.1.9.1.3.1 s "new system name"
