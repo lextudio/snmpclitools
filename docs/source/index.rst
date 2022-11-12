@@ -19,7 +19,7 @@ of computing platforms and ease introducing new SNMP features
 by leveraging the high-level programming language.
 
 These SNMP tools are free and open-source. Source code is hosted in
-a `GitHub repo <https://github.com/pysnmp/snmpclitools>`_ and
+a `GitHub repo <https://github.com/lextudio/snmpclitools>`_ and
 distributed under 2-clause BSD-style license.
 
 Quick start
@@ -133,5 +133,5 @@ Contact
 -------
 
 In case of questions or issues using these SNMP tools, please open up an
-`issue <https://github.com/pysnmp/snmpclitools/issues>`_ at GitHub.
+`issue <https://github.com/lextudio/pysnmp/issues>`_ at GitHub.
 Or just fix it and send us a pull request. ;-)

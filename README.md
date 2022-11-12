@@ -29,7 +29,7 @@ Download
 
 The snmpclitools package is distributed under terms and conditions of 2-clause
 BSD [license](https://www.pysnmp.com/snmpclitools/license.html). Source code is freely
-available as a Github [repo](https://github.com/pysnmp/snmpclitools).
+available as a Github [repo](https://github.com/lextudio/snmpclitools).
 
 Installation
 ------------
@@ -71,7 +71,7 @@ Getting help
 ------------
 
 If something does not work as expected, please open up a
-[GitHub issue](https://github.com/pysnmp/snmpclitools/issues/new) or post
+[GitHub issue](https://github.com/lextudio/pysnmp/issues/new) or post
 your question [to Stack Overflow](https://stackoverflow.com/questions/ask).
 
 Feedback and collaboration
@@ -80,5 +80,7 @@ Feedback and collaboration
 I'm interested in bug reports, fixes, suggestions and improvements. Your
 pull requests are very welcome!
 
-Copyright (c) 2005-2019, [Ilya Etingof](mailto:etingof@gmail.com). All rights reserved.
+Copyright (c) 2005-2019, [Ilya Etingof](mailto:etingof@gmail.com).
+Copyright (c) 2022, [LeXtudio Inc.](mailto:support@lextudio.com).
+All rights reserved.
 
