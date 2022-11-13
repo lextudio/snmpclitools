@@ -37,7 +37,7 @@ Installation
 Download snmpclitools from [PyPI](https://pypi.org/project/snmpclitools) or just run:
 
 ```bash
-$ pip install snmpclitools
+$ pip install snmpclitools-lextudio
 ```
 
 How to use the tools

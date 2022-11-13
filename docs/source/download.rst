@@ -17,7 +17,7 @@ them all into a Python virtual environment:
 
    $ python3 -m venv venv3
    $ . venv3/bin/activate
-   $ pip install snmpclitools
+   $ pip install snmpclitools-lextudio
 
 or
 
