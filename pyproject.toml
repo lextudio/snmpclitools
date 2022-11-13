@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "snmpclitools-lextudio"
-version = "0.6.5"
+version = "0.6.4"
 description = "A collection of command-line tools for SNMP management purposes built on top of PySNMP package."
 authors = ["Lex Li <support@lextudio.com>"]
 license = "BSD-2-Clause"
