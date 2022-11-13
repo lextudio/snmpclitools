@@ -82,46 +82,47 @@ def cbFun(snmpEngine, sendRequestHandle, errorIndication,
                 )
             )
 
+def start():
 
-snmpEngine = engine.SnmpEngine()
+    snmpEngine = engine.SnmpEngine()
 
-try:
-    # Parse c/l into AST
-    ast = Parser().parse(
-        Scanner().tokenize(' '.join(sys.argv[1:]))
-    )
+    try:
+        # Parse c/l into AST
+        ast = Parser().parse(
+            Scanner().tokenize(' '.join(sys.argv[1:]))
+        )
 
-    ctx = {}
+        ctx = {}
 
-    # Apply configuration to SNMP entity
-    main.generator((snmpEngine, ctx), ast)
-    msgmod.generator((snmpEngine, ctx), ast)
-    secmod.generator((snmpEngine, ctx), ast)
-    mibview.generator((snmpEngine, ctx), ast)
-    target.generator((snmpEngine, ctx), ast)
-    pdu.writePduGenerator((snmpEngine, ctx), ast)
+        # Apply configuration to SNMP entity
+        main.generator((snmpEngine, ctx), ast)
+        msgmod.generator((snmpEngine, ctx), ast)
+        secmod.generator((snmpEngine, ctx), ast)
+        mibview.generator((snmpEngine, ctx), ast)
+        target.generator((snmpEngine, ctx), ast)
+        pdu.writePduGenerator((snmpEngine, ctx), ast)
 
-    cmdgen.SetCommandGenerator().sendVarBinds(
-        snmpEngine,
-        ctx['addrName'],
-        ctx.get('contextEngineId'), ctx.get('contextName', ''),
-        ctx['varBinds'],
-        cbFun, ctx
-    )
+        cmdgen.SetCommandGenerator().sendVarBinds(
+            snmpEngine,
+            ctx['addrName'],
+            ctx.get('contextEngineId'), ctx.get('contextName', ''),
+            ctx['varBinds'],
+            cbFun, ctx
+        )
 
-    snmpEngine.transportDispatcher.runDispatcher()
+        snmpEngine.transportDispatcher.runDispatcher()
 
-except KeyboardInterrupt:
-    sys.stderr.write('Shutting down...\n')
+    except KeyboardInterrupt:
+        sys.stderr.write('Shutting down...\n')
 
-except error.PySnmpError:
-    sys.stderr.write('Error: %s\n%s' % (sys.exc_info()[1], getUsage()))
-    sys.exit(1)
+    except error.PySnmpError:
+        sys.stderr.write('Error: %s\n%s' % (sys.exc_info()[1], getUsage()))
+        sys.exit(1)
 
-except Exception:
-    sys.stderr.write('Process terminated: %s\n' % sys.exc_info()[1])
+    except Exception:
+        sys.stderr.write('Process terminated: %s\n' % sys.exc_info()[1])
 
-    for line in traceback.format_exception(*sys.exc_info()):
-        sys.stderr.write(line.replace('\n', ';'))
+        for line in traceback.format_exception(*sys.exc_info()):
+            sys.stderr.write(line.replace('\n', ';'))
 
-    sys.exit(1)
+        sys.exit(1)

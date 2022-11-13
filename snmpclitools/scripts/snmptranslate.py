@@ -182,60 +182,61 @@ class MibViewProxy(mibview.MibViewProxy):
 
         return out
 
+def start():
 
-snmpEngine = engine.SnmpEngine()
+    snmpEngine = engine.SnmpEngine()
 
-# Load up MIB texts (DESCRIPTION, etc.)
-mibBuilder = snmpEngine.getMibBuilder()
-mibBuilder.loadTexts = True
+    # Load up MIB texts (DESCRIPTION, etc.)
+    mibBuilder = snmpEngine.getMibBuilder()
+    mibBuilder.loadTexts = True
 
-ctx = {}
+    ctx = {}
 
-try:
-    # Parse c/l into AST
-    ast = Parser().parse(
-        Scanner().tokenize(' '.join(sys.argv[1:]))
-    )
-
-    # Apply configuration to SNMP entity
-    main.generator((snmpEngine, ctx), ast)
-    ctx['mibViewProxy'] = MibViewProxy(ctx['mibViewController'])
-    mibview.generator((snmpEngine, ctx), ast)
-    pdu.readPduGenerator((snmpEngine, ctx), ast)
-    generator((snmpEngine, ctx), ast)
-
-except KeyboardInterrupt:
-    sys.stderr.write('Shutting down...\n')
-
-except error.PySnmpError:
-    sys.stderr.write('Error: %s\n%s' % (sys.exc_info()[1], getUsage()))
-    sys.exit(1)
-
-except Exception:
-    sys.stderr.write('Process terminated: %s\n' % sys.exc_info()[1])
-    for line in traceback.format_exception(*sys.exc_info()):
-        sys.stderr.write(line.replace('\n', ';'))
-    sys.exit(1)
-
-ctx['mibViewProxy'].buildValue = 0  # disable value printout
-
-for oid, val in ctx['varBinds']:
-
-    while True:
-        if val is None:
-            val = univ.Null()
-
-        sys.stdout.write(
-            '%s\n' % ctx['mibViewProxy'].getPrettyOidVal(
-                ctx['mibViewController'], oid, val
-            )
+    try:
+        # Parse c/l into AST
+        ast = Parser().parse(
+            Scanner().tokenize(' '.join(sys.argv[1:]))
         )
 
-        if not ctx['mibViewProxy'].translateMassMode:
-            break
+        # Apply configuration to SNMP entity
+        main.generator((snmpEngine, ctx), ast)
+        ctx['mibViewProxy'] = MibViewProxy(ctx['mibViewController'])
+        mibview.generator((snmpEngine, ctx), ast)
+        pdu.readPduGenerator((snmpEngine, ctx), ast)
+        generator((snmpEngine, ctx), ast)
 
-        try:
-            oid, label, suffix = ctx['mibViewController'].getNextNodeName(oid)
+    except KeyboardInterrupt:
+        sys.stderr.write('Shutting down...\n')
 
-        except NoSuchObjectError:
-            break
+    except error.PySnmpError:
+        sys.stderr.write('Error: %s\n%s' % (sys.exc_info()[1], getUsage()))
+        sys.exit(1)
+
+    except Exception:
+        sys.stderr.write('Process terminated: %s\n' % sys.exc_info()[1])
+        for line in traceback.format_exception(*sys.exc_info()):
+            sys.stderr.write(line.replace('\n', ';'))
+        sys.exit(1)
+
+    ctx['mibViewProxy'].buildValue = 0  # disable value printout
+
+    for oid, val in ctx['varBinds']:
+
+        while True:
+            if val is None:
+                val = univ.Null()
+
+            sys.stdout.write(
+                '%s\n' % ctx['mibViewProxy'].getPrettyOidVal(
+                    ctx['mibViewController'], oid, val
+                )
+            )
+
+            if not ctx['mibViewProxy'].translateMassMode:
+                break
+
+            try:
+                oid, label, suffix = ctx['mibViewController'].getNextNodeName(oid)
+
+            except NoSuchObjectError:
+                break

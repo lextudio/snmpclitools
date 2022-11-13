@@ -163,61 +163,61 @@ def cbFun(snmpEngine, sendRequestHandle, errorIndication,
 
     return True  # continue walking
 
+def start():
+    # Run SNMP engine
 
-# Run SNMP engine
+    snmpEngine = engine.SnmpEngine()
 
-snmpEngine = engine.SnmpEngine()
+    ctx = {}
 
-ctx = {}
+    try:
+        # Parse c/l into AST
+        ast = Parser().parse(
+            Scanner().tokenize(' '.join(sys.argv[1:]))
+        )
 
-try:
-    # Parse c/l into AST
-    ast = Parser().parse(
-        Scanner().tokenize(' '.join(sys.argv[1:]))
-    )
+        # Apply configuration to SNMP entity
+        main.generator((snmpEngine, ctx), ast)
+        msgmod.generator((snmpEngine, ctx), ast)
+        secmod.generator((snmpEngine, ctx), ast)
+        mibview.generator((snmpEngine, ctx), ast)
+        target.generator((snmpEngine, ctx), ast)
+        pdu.readPduGenerator((snmpEngine, ctx), ast)
+        generator((snmpEngine, ctx), ast)
 
-    # Apply configuration to SNMP entity
-    main.generator((snmpEngine, ctx), ast)
-    msgmod.generator((snmpEngine, ctx), ast)
-    secmod.generator((snmpEngine, ctx), ast)
-    mibview.generator((snmpEngine, ctx), ast)
-    target.generator((snmpEngine, ctx), ast)
-    pdu.readPduGenerator((snmpEngine, ctx), ast)
-    generator((snmpEngine, ctx), ast)
+        ctx['myHeadVars'] = [rfc1902.ObjectName(x[0]) for x in ctx['varBinds']]
 
-    ctx['myHeadVars'] = [rfc1902.ObjectName(x[0]) for x in ctx['varBinds']]
+        cmdgen.BulkCommandGenerator().sendVarBinds(
+            snmpEngine,
+            ctx['addrName'],
+            ctx.get('contextEngineId'), ctx.get('contextName', ''),
+            ctx.get('nonRepeaters', 0), ctx.get('maxRepetitions', 25),
+            ctx['varBinds'],
+            cbFun, ctx
+        )
 
-    cmdgen.BulkCommandGenerator().sendVarBinds(
-        snmpEngine,
-        ctx['addrName'],
-        ctx.get('contextEngineId'), ctx.get('contextName', ''),
-        ctx.get('nonRepeaters', 0), ctx.get('maxRepetitions', 25),
-        ctx['varBinds'],
-        cbFun, ctx
-    )
+        snmpEngine.transportDispatcher.runDispatcher()
 
-    snmpEngine.transportDispatcher.runDispatcher()
+    except KeyboardInterrupt:
+        sys.stderr.write('Shutting down...\n')
 
-except KeyboardInterrupt:
-    sys.stderr.write('Shutting down...\n')
+    except error.PySnmpError:
+        sys.stderr.write('Error: %s\n%s' % (sys.exc_info()[1], getUsage()))
+        sys.exit(1)
 
-except error.PySnmpError:
-    sys.stderr.write('Error: %s\n%s' % (sys.exc_info()[1], getUsage()))
-    sys.exit(1)
+    except Exception:
+        sys.stderr.write('Process terminated: %s\n' % sys.exc_info()[1])
 
-except Exception:
-    sys.stderr.write('Process terminated: %s\n' % sys.exc_info()[1])
+        for line in traceback.format_exception(*sys.exc_info()):
+            sys.stderr.write(line.replace('\n', ';'))
 
-    for line in traceback.format_exception(*sys.exc_info()):
-        sys.stderr.write(line.replace('\n', ';'))
+        sys.exit(1)
 
-    sys.exit(1)
+    if ctx.get('reportFoundVars'):
+        sys.stdout.write(
+            'Variables found: %s\n' % (ctx['reportFoundVars'] - 1))
 
-if ctx.get('reportFoundVars'):
-    sys.stdout.write(
-        'Variables found: %s\n' % (ctx['reportFoundVars'] - 1))
-
-if ctx.get('displayWallClock'):
-    sys.stdout.write(
-        'Total traversal time = %.4f seconds'
-        '\n' % (time.time() - ctx['displayWallClock']))
+    if ctx.get('displayWallClock'):
+        sys.stdout.write(
+            'Total traversal time = %.4f seconds'
+            '\n' % (time.time() - ctx['displayWallClock']))
