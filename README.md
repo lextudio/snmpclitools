@@ -3,6 +3,7 @@ Command-line SNMP tools
 -----------------------
 
 [![PyPI](https://img.shields.io/pypi/v/snmpclitools-lextudio.svg?maxAge=2592000)](https://pypi.org/project/snmpclitools-lextudio)
+[![PyPI Downloads](https://img.shields.io/pypi/dd/snmpclitools-lextudio)](https://pypi.python.org/pypi/snmpclitools-lextudio/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/snmpclitools-lextudio.svg)](https://pypi.org/project/snmpclitools-lextudio/)
 [![GitHub license](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/lextudio/snmpclitools/master/LICENSE.rst)
 
