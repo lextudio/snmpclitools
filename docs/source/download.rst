@@ -38,7 +38,7 @@ downloading and running `ez_setup.pz <https://bootstrap.pypa.io/ez_setup.py>`_ b
 In case you are installing SNMP tools on an off-line system, the following
 packages need to be downloaded and installed:
 
-* `PyASN1 <https://pypi.org/project/pyasn1-lextudio>`_,
+* `PyASN1 <https://pypi.org/project/pyasn1>`_,
   used for handling ASN.1 objects
 * `PySNMP <https://pypi.org/project/pysnmp-lextudio>`_,
   SNMP engine implementation
