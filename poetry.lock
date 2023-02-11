@@ -264,7 +264,7 @@ optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-pyasn1-lextudio = ">=1.0.3,<2.0.0"
+pyasn1 = ">=0.4.8"
 pycryptodomex = ">=3.11.0,<4.0.0"
 pysmi-lextudio = ">=1.0.4,<2.0.0"
 
