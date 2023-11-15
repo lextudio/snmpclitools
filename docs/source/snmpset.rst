@@ -126,10 +126,10 @@ specify SNMP value type by hand.
 
 .. code-block:: bash
 
-    $ snmpset.py -v2c -c private demo.pysnmp.com IF-MIB::ifAdminStatus."1" = 'up'
+    $ snmpset -v2c -c private demo.pysnmp.com IF-MIB::ifAdminStatus."1" = 'up'
     IF-MIB::ifAdminStatus."1" = Integer32: 'up'
     $
-    $ snmpset.py -v2c -c private demo.pysnmp.com 1.3.6.1.2.1.2.2.1.7.1 i 1
+    $ snmpset -v2c -c private demo.pysnmp.com 1.3.6.1.2.1.2.2.1.7.1 i 1
     1.3.6.1.2.1.6.2.0 = Integer32: 1
 
 You can address many MIB objects by a single SNMP SET request by specifying
@@ -137,7 +137,7 @@ them all at the command line.
 
 .. code-block:: bash
 
-    $ snmpset.py -v2c -c private demo.pysnmp.com IF-MIB::ifAdminStatus."1" = 'up' \
+    $ snmpset -v2c -c private demo.pysnmp.com IF-MIB::ifAdminStatus."1" = 'up' \
         IF-MIB::ifAdminStatus."2" = 'down'
     IF-MIB::ifAdminStatus."1" = Integer32: 'up'
     IF-MIB::ifAdminStatus."2" = Integer32: 'down'
@@ -156,7 +156,7 @@ The following command will send SNMP v1 SET message:
 
 .. code-block:: bash
 
-   snmpset.py -v1 -c public demo.pysnmp.com \
+   snmpset -v1 -c public demo.pysnmp.com \
        1.3.6.1.2.1.1.9.1.2.1 = 1.3.6.1.4.1.20408.1.1 \
        1.3.6.1.2.1.1.9.1.3.1 s "new system name"
 
@@ -171,7 +171,7 @@ The following command will send SNMP v2c SET message:
 
 .. code-block:: bash
 
-   snmpset.py -v2c -c public demo.pysnmp.com \
+   snmpset -v2c -c public demo.pysnmp.com \
        1.3.6.1.2.1.1.9.1.2.1 = 1.3.6.1.4.1.20408.1.1 \
        1.3.6.1.2.1.1.9.1.3.1 s "new system name"
 
@@ -186,7 +186,7 @@ The following command will send SNMP v3 SET message:
 
 .. code-block:: bash
 
-   snmpset.py -v3 -l authPriv -u usr-md5-des -A authkey1 -X privkey1 \
+   snmpset -v3 -l authPriv -u usr-md5-des -A authkey1 -X privkey1 \
        demo.pysnmp.com \
        1.3.6.1.2.1.1.9.1.2.1 = 1.3.6.1.4.1.20408.1.1 \
        1.3.6.1.2.1.1.9.1.3.1 s "new system name"

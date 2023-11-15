@@ -19,22 +19,6 @@ them all into a Python virtual environment:
    $ . venv3/bin/activate
    $ pip install snmpclitools-lextudio
 
-or
-
-.. code-block:: bash
-
-   $ easy_install snmpclitools
-
-In case you do not have the *easy_install* command on your system but still
-would like to use the on-line package installation method, please install 
-`setuptools <https://pypi.org/project/setuptools>`_ package by 
-downloading and running `ez_setup.pz <https://bootstrap.pypa.io/ez_setup.py>`_ bootstrap:
-
-.. code-block:: bash
-
-   # wget https://bootstrap.pypa.io/ez_setup.py
-   # python ez_setup.py
-
 In case you are installing SNMP tools on an off-line system, the following
 packages need to be downloaded and installed:
 
@@ -52,18 +36,5 @@ Optional, but recommended:
 * `Ply <https://pypi.org/project/ply/>`_, parser generator
   required by PySMI
 
-The installation procedure for all the above packages is as follows 
-(on UNIX-based systems):
-
-.. code-block:: bash
-
-   $ tar zxf package-X.X.X.tar.gz 
-   $ cd package-X.X.X 
-   # python setup.py install 
-   # cd .. 
-   # rm -rf package-X.X.X
-
 In case of any issues, please open a `GitHub issue <https://github.com/lextudio/pysnmp/issues/new>`_ so
 we could try to help out.
-
-

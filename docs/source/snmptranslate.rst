@@ -64,16 +64,16 @@ require MIB access.
 
 .. code-block:: bash
 
-    $ snmptranslate.py TCP-MIB::tcpRtoMin.0
+    $ snmptranslate TCP-MIB::tcpRtoMin.0
     TCP-MIB::tcpRtoMin.0
     $
-    $ snmptranslate.py 1.3.6.1.2.1.6.2.0
+    $ snmptranslate 1.3.6.1.2.1.6.2.0
     SNMPv2-SMI::mib-2.6.2.0
     $
-    $ snmptranslate.py -m TCP-MIB 1.3.6.1.2.1.6.2.0
+    $ snmptranslate -m TCP-MIB 1.3.6.1.2.1.6.2.0
     TCP-MIB::tcpRtoMin.0
     $
-    $ snmptranslate.py TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
+    $ snmptranslate TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
     TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
 
 If only MIB name is given, the first MIB object in that MIB will be taken
@@ -81,13 +81,13 @@ as object name:
 
 .. code-block:: bash
 
-    $ snmptranslate.py TCP-MIB::
+    $ snmptranslate TCP-MIB::
     TCP-MIB::tcp
 
 You can look up many MIB objects by specifying them all at the command line:
 
 .. code-block:: bash
 
-    $ snmptranslate.py -On SNMPv2-MIB::sysName.0 SNMPv2-MIB::sysLocation.0
+    $ snmptranslate -On SNMPv2-MIB::sysName.0 SNMPv2-MIB::sysLocation.0
     1.3.6.1.2.1.1.5.0
     1.3.6.1.2.1.1.6.0

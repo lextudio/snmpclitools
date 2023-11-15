@@ -27,14 +27,19 @@ Quick start
 
 If you understand SNMP and have some experience with the Net-SNMP tool set,
 you do not need to learn much. Just install *snmpclitools* and run the
-*.py*-suffixed version of the SNMP tool you want.
+SNMP tool you want.
+
+For example, Net-SNMP works like this,
 
 .. code-block:: bash
 
    $ snmpget -v2c -c public demo.pysnmp.com sysDescr.0
    SNMPv2-MIB::sysDescr.0 = STRING: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
-   $
-   $ snmpget.py -v2c -c public demo.pysnmp.com sysDescr.0
+
+and snmpclitools works like this,
+
+.. code-block:: bash
+   $ snmpget -v2c -c public demo.pysnmp.com sysDescr.0
    SNMPv2-MIB::sysDescr.0 = DisplayString: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
 
 Here and later throughout the examples we will be using the
@@ -47,10 +52,6 @@ All SNMP versions are indeed supported including version 3.
 .. code-block:: bash
 
    $ snmpget -v3 -u usr-md5-des -l authPriv \
-       -A authkey1 -X privkey1  demo.pysnmp.com sysDescr.0
-   SNMPv2-MIB::sysDescr.0 = DisplayString: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
-   $
-   $ snmpget.py -v3 -u usr-md5-des -l authPriv \
        -A authkey1 -X privkey1  demo.pysnmp.com sysDescr.0
    SNMPv2-MIB::sysDescr.0 = DisplayString: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
 
@@ -69,14 +70,14 @@ you want to manage. By default, the tool will try to pull required SNMP MIB by
 name from `this large MIB repository <https://mibs.pysnmp.com/asn1/>`_, compile
 the MIB and use the information it contains for building SNMP query.
 
-For example, the *snmpget.py* tool in the snippet below will pull
+For example, the *snmpget* tool in the snippet below will pull
 `IF-MIB <https://mibs.pysnmp.com/asn1/IF-MIB>`_ file, parse it to
 find the object ID of the *ifNumber* object, build and send proper
 SNMP query:
 
 .. code-block:: bash
 
-   $ snmpget.py -v3 -u usr-md5-des -l authPriv \
+   $ snmpget -v3 -u usr-md5-des -l authPriv \
        -A authkey1 -X privkey1  demo.pysnmp.com IF-MIB::ifNumber.0
    IF-MIB::ifNumber.0 = Integer32: 2
 
@@ -89,12 +90,12 @@ Documentation
 .. toctree::
    :maxdepth: 2
 
-   snmpget.py </snmpget>
-   snmpset.py </snmpset>
-   snmpwalk.py </snmpwalk>
-   snmpbulkwalk.py </snmpbulkwalk>
-   snmptrap.py </snmptrap>
-   snmptranslate.py </snmptranslate>
+   snmpget </snmpget>
+   snmpset </snmpset>
+   snmpwalk </snmpwalk>
+   snmpbulkwalk </snmpbulkwalk>
+   snmptrap </snmptrap>
+   snmptranslate </snmptranslate>
 
 Download
 --------

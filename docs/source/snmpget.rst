@@ -94,13 +94,13 @@ require MIB access.
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public demo.pysnmp.com TCP-MIB::tcpRtoMin.0
+    $ snmpget -v2c -c public demo.pysnmp.com TCP-MIB::tcpRtoMin.0
     TCP-MIB::tcpRtoMin.0 = Integer32: 200 milliseconds
     $
-    $ snmpget.py -v2c -c public demo.pysnmp.com 1.3.6.1.2.1.6.2.0
+    $ snmpget -v2c -c public demo.pysnmp.com 1.3.6.1.2.1.6.2.0
     1.3.6.1.2.1.6.2.0 = Integer32: 200 milliseconds
     $
-    $ snmpget.py  -v2c -c public demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
+    $ snmpget  -v2c -c public demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
     TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389" = Integer32: 'established'
 
 If only MIB name is given, the first MIB object in that MIB will be taken
@@ -108,7 +108,7 @@ as object name
 
 .. code-block:: bash
 
-    $ snmpwalk.py -v2c -c public demo.pysnmp.com TCP-MIB::
+    $ snmpwalk -v2c -c public demo.pysnmp.com TCP-MIB::
     TCP-MIB::tcpRtoAlgorithm.0 = Integer32: 'other'
     TCP-MIB::tcpRtoMin.0 = Integer32: 200 milliseconds
 
@@ -117,7 +117,7 @@ them all at the command line.
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public demo.pysnmp.com SNMPv2-MIB::sysName.0 SNMPv2-MIB::sysLocation.0
+    $ snmpget -v2c -c public demo.pysnmp.com SNMPv2-MIB::sysName.0 SNMPv2-MIB::sysLocation.0
     SNMPv2-MIB::sysName.0 = DisplayString: new system name
     SNMPv2-MIB::sysLocation.0 = DisplayString: San Francisco, California, United States
 
@@ -135,7 +135,7 @@ The following command will send SNMP v1 GET message:
 
 .. code-block:: bash
 
-   snmpget.py -v1 -c public demo.pysnmp.com SNMPv2-MIB::sysDescr.0 \
+   snmpget -v1 -c public demo.pysnmp.com SNMPv2-MIB::sysDescr.0 \
       SNMPv2-MIB::sysName.0
 
 SNMPv2c GET example
@@ -149,7 +149,7 @@ The following command will send SNMP v2c GET message:
 
 .. code-block:: bash
 
-   snmpget.py -v2c -c public demo.pysnmp.com SNMPv2-MIB::sysDescr.0 \
+   snmpget -v2c -c public demo.pysnmp.com SNMPv2-MIB::sysDescr.0 \
       SNMPv2-MIB::sysName.0
 
 SNMPv3 GET example
@@ -163,5 +163,5 @@ The following command will send SNMP v3 GET message:
 
 .. code-block:: bash
 
-   snmpget.py -v3 -l authPriv -u usr-md5-des -A authkey1 -X privkey1 \
+   snmpget -v3 -l authPriv -u usr-md5-des -A authkey1 -X privkey1 \
        demo.pysnmp.com IF-MIB::ifInOctets.1

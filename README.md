@@ -48,7 +48,7 @@ The most of pysnmp command-line tools could be run in a similar way as
 their Net-SNMP counterparts. For example:
 
 ```bash
-$ snmpbulkwalk.py -v3 -u usr-md5-des -l authPriv -A authkey1 -X privkey1 demo.pysnmp.com system
+$ snmpbulkwalk -v3 -u usr-md5-des -l authPriv -A authkey1 -X privkey1 demo.pysnmp.com system
 SNMPv2-MIB::sysDescr.0 = DisplayString: Linux grommit 3.5.11.1 #2 PREEMPT Tue Mar 1 14:03:24 MSD 2016 i686 unknown unknown GNU/Linux
 SNMPv2-MIB::sysObjectID.0 = ObjectIdentifier: iso.org.dod.internet.private.enterprises.8072.3.2.101.3.6.1.4.1.8072.3.2.10
 SNMPv2-MIB::sysUpTime.0 = TimeTicks: 43 days 1:55:47.85372214785
@@ -56,10 +56,10 @@ SNMPv2-MIB::sysUpTime.0 = TimeTicks: 43 days 1:55:47.85372214785
 SNMPv2-MIB::sysORUpTime."8" = TimeStamp: 0 days 0:0:0.77
 SNMPv2-MIB::sysORUpTime."9" = TimeStamp: 0 days 0:0:0.77
 
-$ snmpget.py -v3 -u usr-sha-aes -l authPriv -A authkey1 -X privkey1 demo.pysnmp.com IP-MIB::ipAdEntBcastAddr.\"127.0.0.1\"
+$ snmpget -v3 -u usr-sha-aes -l authPriv -A authkey1 -X privkey1 demo.pysnmp.com IP-MIB::ipAdEntBcastAddr.\"127.0.0.1\"
 IP-MIB::ipAdEntBcastAddr."127.0.0.1" = Integer32: 1
 
-$ snmpset.py -v2c -c public demo.pysnmp.com SNMPv2-MIB::sysDescr.0 = my-new-descr
+$ snmpset -v2c -c public demo.pysnmp.com SNMPv2-MIB::sysDescr.0 = my-new-descr
 notWritable(17)
 ```
 
@@ -82,6 +82,6 @@ I'm interested in bug reports, fixes, suggestions and improvements. Your
 pull requests are very welcome!
 
 Copyright (c) 2005-2019, [Ilya Etingof](mailto:etingof@gmail.com).
-Copyright (c) 2022, [LeXtudio Inc.](mailto:support@lextudio.com).
+Copyright (c) 2022-2023, [LeXtudio Inc.](mailto:support@lextudio.com).
 All rights reserved.
 

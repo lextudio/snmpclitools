@@ -13,10 +13,10 @@ from the variable-binding being reported on stdout.
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public -Oq demo.pysnmp.com sysDescr.0
+    $ snmpget -v2c -c public -Oq demo.pysnmp.com sysDescr.0
     SNMPv2-MIB::sysDescr.0 Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
     $
-    $ snmpget.py -v2c -c public demo.pysnmp.com sysDescr.0
+    $ snmpget -v2c -c public demo.pysnmp.com sysDescr.0
     SNMPv2-MIB::sysDescr.0 = DisplayString: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
 
 Type information
@@ -27,10 +27,10 @@ variable-binding being reported on stdout.
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public -OQ demo.pysnmp.com sysDescr.0
+    $ snmpget -v2c -c public -OQ demo.pysnmp.com sysDescr.0
     SNMPv2-MIB::sysDescr.0 = Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
     $
-    $ snmpget.py -v2c -c public demo.pysnmp.com sysDescr.0
+    $ snmpget -v2c -c public demo.pysnmp.com sysDescr.0
     SNMPv2-MIB::sysDescr.0 = DisplayString: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
 
 Managed object path
@@ -41,7 +41,7 @@ tree rather than MIB name and MIB object name (the default).
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public -Of demo.pysnmp.com sysDescr.0
+    $ snmpget -v2c -c public -Of demo.pysnmp.com sysDescr.0
     iso.org.dod.internet.mgmt.mib-2.system.sysDescr.0 = DisplayString: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
 
 Managed object name
@@ -52,7 +52,7 @@ rather than MIB name and MIB object name (the default).
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public -Os demo.pysnmp.com sysDescr.0
+    $ snmpget -v2c -c public -Os demo.pysnmp.com sysDescr.0
     sysDescr.0 = DisplayString: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
 
 Raw OID
@@ -63,7 +63,7 @@ human friendly MIB object name:
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public -On demo.pysnmp.com sysDescr.0
+    $ snmpget -v2c -c public -On demo.pysnmp.com sysDescr.0
     1.3.6.1.2.1.1.1.0 = DisplayString: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
 
 Numeric enumerations
@@ -74,10 +74,10 @@ values:
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public -On demo.pysnmp.com IF-MIB::ifAdminStatus.1
+    $ snmpget -v2c -c public -On demo.pysnmp.com IF-MIB::ifAdminStatus.1
     1.3.6.1.2.1.2.2.1.7.1 = Integer32: 'up'
     $
-    $ snmpget.py -v2c -c public -Oe demo.pysnmp.com IF-MIB::ifAdminStatus.1
+    $ snmpget -v2c -c public -Oe demo.pysnmp.com IF-MIB::ifAdminStatus.1
     IF-MIB::ifAdminStatus."1" = Integer32: 1
 
 Break down table index
@@ -88,10 +88,10 @@ raw OID instead:
 
 .. code-block:: bash
 
-    $ snmpget.py  -v2c -c public -Ob demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
+    $ snmpget  -v2c -c public -Ob demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
     TCP-MIB::tcpConnState.195.218.254.105.45632.10.105.41.179.3389 = Integer32: 'established'
     $
-    $ snmpget.py  -v2c -c public demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
+    $ snmpget  -v2c -c public demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
     TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389" = Integer32: 'established'
 
 Escape table index quotes
@@ -102,7 +102,7 @@ This can be useful when UNIX shell is in the processing pipeline.
 
 .. code-block:: bash
 
-    $ snmpget.py  -v2c -c public -OE  demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
+    $ snmpget  -v2c -c public -OE  demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
     TCP-MIB::tcpConnState.\"195.218.254.105\".\"45632\".\"10.105.41.179\".\"3389\" = Integer32: 'established'
 
 Brackets around table indices
@@ -113,7 +113,7 @@ instead of quotes (default):
 
 .. code-block:: bash
 
-    $ snmpget.py  -v2c -c public -OX  demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
+    $ snmpget  -v2c -c public -OX  demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389"
     TCP-MIB::tcpConnState.[195.218.254.105].[45632].[10.105.41.179].[3389] = Integer32: 'established'
 
 Hexified values
@@ -123,10 +123,10 @@ The *-OT* option ensures that rendered values are always in hex:
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public -OT demo.pysnmp.com sysName.0
+    $ snmpget -v2c -c public -OT demo.pysnmp.com sysName.0
     SNMPv2-MIB::sysName.0 = DisplayString: 6e 65 77 20 73 79 73 74 65 6d 20 6e 61 6d 65
     $
-    $ snmpget.py -v2c -c public demo.pysnmp.com sysName.0
+    $ snmpget -v2c -c public demo.pysnmp.com sysName.0
     SNMPv2-MIB::sysName.0 = DisplayString: new system name
 
 Rendering just values
@@ -136,7 +136,7 @@ The *-Ov* option removes managed object name from the rendered output:
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public -Ov demo.pysnmp.com sysName.0
+    $ snmpget -v2c -c public -Ov demo.pysnmp.com sysName.0
     DisplayString: new system name
 
 Units rendering
@@ -146,10 +146,10 @@ The *-OU* option disables units rendering:
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public demo.pysnmp.com TCP-MIB::tcpRtoMin.0
+    $ snmpget -v2c -c public demo.pysnmp.com TCP-MIB::tcpRtoMin.0
     TCP-MIB::tcpRtoMin.0 = Integer32: 200 milliseconds
     $
-    $ snmpget.py -v2c -c public -OU  demo.pysnmp.com TCP-MIB::tcpRtoMin.0
+    $ snmpget -v2c -c public -OU  demo.pysnmp.com TCP-MIB::tcpRtoMin.0
     TCP-MIB::tcpRtoMin.0 = Integer32: 200
 
 Raw timeticks
@@ -160,8 +160,8 @@ raw values get rendered:
 
 .. code-block:: bash
 
-    $ snmpget.py -v2c -c public -Ot demo.pysnmp.com SNMPv2-MIB::sysORLastChange.0
+    $ snmpget -v2c -c public -Ot demo.pysnmp.com SNMPv2-MIB::sysORLastChange.0
     SNMPv2-MIB::sysORLastChange.0 = TimeStamp: 143145968
     $
-    $ snmpget.py -v2c -c public demo.pysnmp.com SNMPv2-MIB::sysORLastChange.0
+    $ snmpget -v2c -c public demo.pysnmp.com SNMPv2-MIB::sysORLastChange.0
     SNMPv2-MIB::sysORLastChange.0 = TimeStamp: 16 days 13:37:44.82

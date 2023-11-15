@@ -127,13 +127,13 @@ require MIB access.
 
 .. code-block:: bash
 
-    $ snmpwalk.py -v2c -c public demo.pysnmp.com TCP-MIB::tcpRtoMin
+    $ snmpwalk -v2c -c public demo.pysnmp.com TCP-MIB::tcpRtoMin
     TCP-MIB::tcpRtoMin.0 = Integer32: 200 milliseconds
     $
-    $ snmpwalk.py -v2c -c public demo.pysnmp.com 1.3.6.1.2.1.6.2
+    $ snmpwalk -v2c -c public demo.pysnmp.com 1.3.6.1.2.1.6.2
     1.3.6.1.2.1.6.2.0 = Integer32: 200 milliseconds
     $
-    $ snmpwalk.py  -v2c -c public demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"
+    $ snmpwalk  -v2c -c public demo.pysnmp.com TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"
     TCP-MIB::tcpConnState."195.218.254.105"."45632"."10.105.41.179"."3389" = Integer32: 'established'
 
 If only MIB name is given, the first MIB object in that MIB will be taken
@@ -141,7 +141,7 @@ as object name
 
 .. code-block:: bash
 
-    $ snmpwalk.py -v2c -c public demo.pysnmp.com TCP-MIB::
+    $ snmpwalk -v2c -c public demo.pysnmp.com TCP-MIB::
     TCP-MIB::tcpRtoAlgorithm.0 = Integer32: 'other'
     TCP-MIB::tcpRtoMin.0 = Integer32: 200 milliseconds
     ...
@@ -151,7 +151,7 @@ them all at the command line.
 
 .. code-block:: bash
 
-    $ snmpwalk.py  -v2c -c public demo.pysnmp.com TCP-MIB:: IF-MIB::
+    $ snmpwalk  -v2c -c public demo.pysnmp.com TCP-MIB:: IF-MIB::
     TCP-MIB::tcpRtoAlgorithm.0 = Integer32: 'other'
     IF-MIB::ifNumber.0 = Integer32: 2
     TCP-MIB::tcpRtoMin.0 = Integer32: 200 milliseconds
@@ -176,7 +176,7 @@ The following command will send SNMP v1 GETNEXT message:
 
 .. code-block:: bash
 
-    snmpwalk.py -v1 -c public demo.pysnmp.com SNMPv2-MIB::system IF-MIB::
+    snmpwalk -v1 -c public demo.pysnmp.com SNMPv2-MIB::system IF-MIB::
 
 SNMPv2c GETNEXT example
 +++++++++++++++++++++++
@@ -189,7 +189,7 @@ The following command will send SNMP v2c GETNEXT message:
 
 .. code-block:: bash
 
-    snmpwalk.py -v2c -c public demo.pysnmp.com SNMPv2-MIB::system IF-MIB::
+    snmpwalk -v2c -c public demo.pysnmp.com SNMPv2-MIB::system IF-MIB::
 
 SNMPv3 GETNEXT example
 ++++++++++++++++++++++
@@ -202,6 +202,6 @@ The following command will send SNMP v3 GETNEXT message:
 
 .. code-block:: bash
 
-    snmpwalk.py -v3 -l authPriv -u usr-md5-des -A authkey1 -X privkey1 \
+    snmpwalk -v3 -l authPriv -u usr-md5-des -A authkey1 -X privkey1 \
         demo.pysnmp.com SNMPv2-MIB::system IF-MIB::
 
