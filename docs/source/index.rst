@@ -39,6 +39,7 @@ For example, Net-SNMP works like this,
 and snmpclitools works like this,
 
 .. code-block:: bash
+
    $ snmpget -v2c -c public demo.pysnmp.com sysDescr.0
    SNMPv2-MIB::sysDescr.0 = DisplayString: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
 

@@ -17,7 +17,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
+import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
@@ -36,7 +36,8 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
-    'sphinx_sitemap'
+    'sphinx_sitemap',
+    'sphinx_copybutton',
 ]
 
 html_baseurl = 'https://www.pysnmp.com/snmpclitools/'
@@ -56,8 +57,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'SNMP Commands'
-copyright = '2005-2019, Ilya Etingof <etingof@gmail.com>'
-author = 'Ilya Etingof <etingof@gmail.com>'
+copyright = '2005-2019, Ilya Etingof. © Copyright 2022-2023, LeXtudio Inc.'
+author = 'LeXtudio Inc. <support@lextudio.com>'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -89,24 +90,23 @@ todo_include_todos = False
 
 # -- Options for HTML output ----------------------------------------------
 
+html_context = {
+    'display_github': True,
+    'github_user': 'lextudio',
+    'github_repo': 'pysnmp',
+    'github_version': 'main/docs/source/',
+}
+
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
 # html_theme_options = {}
-html_theme_options = {
-    'logo': 'logo.svg',
-    'description': '<p align=left><i><b>Brewing free software for the communities</i></b></p>',
-    'show_powered_by': False,
-    'github_user': 'lextudio',
-    'github_repo': 'snmpclitools',
-    'fixed_sidebar': True,
-}
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -118,26 +118,11 @@ html_favicon = '.static/favicon.ico'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['.static']
 
-# Custom sidebar templates, must be a dictionary that maps document names
-# to template names.
-#
-# This is required for the alabaster theme
-# refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
-html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'relations.html',
-        'searchbox.html',
-        'donate.html',
-    ]
-}
-
 # If true, links to the reST sources are added to the pages.
-html_show_sourcelink = False
+#html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
-html_show_sphinx = False
+#html_show_sphinx = True
 
 # -- Options for HTMLHelp output ------------------------------------------
 
@@ -197,10 +182,9 @@ texinfo_documents = [
 
 # Configuration for Intersphinx
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/3.4/', None),
+    'python': ('https://docs.python.org/3.7/', None),
     'pyasn1': ('https://pyasn1.readthedocs.io/', None),
     'pysmi': ('https://www.pysnmp.com/pysmi/', None),
-    'twisted': ('https://twistedmatrix.com/documents/15.4.0/api/', None)
 }
 
 # this merges constructor docstring with class docstring
@@ -219,3 +203,12 @@ napoleon_use_admonition_for_references = False
 napoleon_use_ivar = False
 napoleon_use_param = False
 napoleon_use_rtype = False
+
+def setup(app):
+    on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+    if not on_rtd:
+        """Insert Google Analytics tracker
+        Based on this Stackoverflow suggestion: https://stackoverflow.com/a/41885884
+        """
+        app.add_js_file("https://www.googletagmanager.com/gtag/js?id=G-DYQGY4MKR3")
+        app.add_js_file("google_analytics_tracker.js")
