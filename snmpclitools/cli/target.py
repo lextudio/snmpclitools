@@ -7,8 +7,8 @@
 import socket
 
 from pysnmp import error
-from pysnmp.carrier.asynsock.dgram import udp
-from pysnmp.carrier.asynsock.dgram import udp6
+from pysnmp.carrier.asyncio.dgram import udp
+from pysnmp.carrier.asyncio.dgram import udp6
 from pysnmp.entity import config
 
 from snmpclitools.cli import base
@@ -33,23 +33,25 @@ Agent address:
 
 # Scanner
 
-class TargetScannerMixIn(object):
+
+class TargetScannerMixIn:
     def t_retries(self, s):
-        """ -r """
-        self.rv.append(base.ConfigToken('retries'))
+        """-r"""
+        self.rv.append(base.ConfigToken("retries"))
 
     def t_timeout(self, s):
-        """ -t """
-        self.rv.append(base.ConfigToken('timeout'))
+        """-t"""
+        self.rv.append(base.ConfigToken("timeout"))
 
     def t_transport(self, s):
-        """ (udp6)|(udp) """
-        self.rv.append(base.ConfigToken('transport', s))
+        """(udp6)|(udp)"""
+        self.rv.append(base.ConfigToken("transport", s))
 
 
 # Parser
 
-class TargetParserMixIn(object):
+
+class TargetParserMixIn:
     def p_targetSpec(self, args):
         """
         Option ::= CommOption
@@ -79,96 +81,97 @@ class TargetParserMixIn(object):
 
 # Generator
 
-if (hasattr(socket, 'has_ipv6') and socket.has_ipv6 and
-        hasattr(socket, 'getaddrinfo')):
+if hasattr(socket, "has_ipv6") and socket.has_ipv6 and hasattr(socket, "getaddrinfo"):
     _getaddrinfo = socket.getaddrinfo
 
 else:
+
     def _getaddrinfo(a, b, c, d):
-        raise SnmpApplicationError('IPv6 not supported by the system')
+        raise SnmpApplicationError("IPv6 not supported by the system")
 
 
 class _TargetGeneratorPassOne(base.GeneratorTemplate):
-    DEFAULT_PORT = '161'
+    DEFAULT_PORT = "161"
     SNMP_DOMAIN_MAP = {
-        'udp': (udp.snmpUDPDomain,
-                udp.UdpSocketTransport,
-                lambda h, p: (socket.gethostbyname(h), int(p))),
-        'udp6': (udp6.snmpUDP6Domain,
-                 udp6.Udp6SocketTransport,
-                 lambda h, p: (_getaddrinfo(h, p, socket.AF_INET6, socket.SOCK_DGRAM)[0][4]))
+        "udp": (
+            udp.snmpUDPDomain,
+            udp.UdpAsyncioTransport,
+            lambda h, p: (socket.gethostbyname(h), int(p)),
+        ),
+        "udp6": (
+            udp6.snmpUDP6Domain,
+            udp6.Udp6AsyncioTransport,
+            lambda h, p: (_getaddrinfo(h, p, socket.AF_INET6, socket.SOCK_DGRAM)[0][4]),
+        ),
     }
-    SNMP_DOMAIN_NAME_MAP = {
-        2: 'udp',
-        10: 'udp6'
-    }
+    SNMP_DOMAIN_NAME_MAP = {2: "udp", 10: "udp6"}
 
     def n_Transport(self, cbCtx, node):
         snmpEngine, ctx = cbCtx
 
         if node[0].attr in self.SNMP_DOMAIN_MAP:
-            (ctx['transportDomain'],
-             ctx['transportModule'],
-             ctx['addrRewriteFun']) = self.SNMP_DOMAIN_MAP[node[0].attr]
+            (
+                ctx["transportDomain"],
+                ctx["transportModule"],
+                ctx["addrRewriteFun"],
+            ) = self.SNMP_DOMAIN_MAP[node[0].attr]
 
         else:
-            raise error.PySnmpError(
-                'Unsupported transport domain %s' % node[0].attr
-            )
+            raise error.PySnmpError("Unsupported transport domain %s" % node[0].attr)
 
     def n_Endpoint(self, cbCtx, node):
         snmpEngine, ctx = cbCtx
-        ctx['transportAddress'] = node[0].attr
+        ctx["transportAddress"] = node[0].attr
 
     def n_IPv6(self, cbCtx, node):
         snmpEngine, ctx = cbCtx
 
         if not len(node):
-            if 'transportDomain' not in ctx:
-                (ctx['transportDomain'],
-                 ctx['transportModule'],
-                 ctx['addrRewriteFun']) = self.SNMP_DOMAIN_MAP['udp6']
+            if "transportDomain" not in ctx:
+                (
+                    ctx["transportDomain"],
+                    ctx["transportModule"],
+                    ctx["addrRewriteFun"],
+                ) = self.SNMP_DOMAIN_MAP["udp6"]
             return
 
-        if ctx.get('transportAddress') is None:
-            ctx['transportAddress'] = ''
+        if ctx.get("transportAddress") is None:
+            ctx["transportAddress"] = ""
 
-        if node[0] == 'semicolon':
-            ctx['transportAddress'] = ctx['transportAddress'] + ':'
+        if node[0] == "semicolon":
+            ctx["transportAddress"] = ctx["transportAddress"] + ":"
 
         else:
-            ctx['transportAddress'] = ctx['transportAddress'] + node[0].attr
+            ctx["transportAddress"] = ctx["transportAddress"] + node[0].attr
 
     def n_Format(self, cbCtx, node):
         snmpEngine, ctx = cbCtx
-        ctx['transportFormat'] = node[0].attr
+        ctx["transportFormat"] = node[0].attr
 
     def n_Agent_exit(self, cbCtx, node):
         snmpEngine, ctx = cbCtx
-        if 'transportDomain' not in ctx:
+        if "transportDomain" not in ctx:
             try:
-                f = _getaddrinfo(ctx['transportAddress'], 0)[0][0]
+                f = _getaddrinfo(ctx["transportAddress"], 0)[0][0]
 
             except Exception:
                 f = -1
 
-            (ctx['transportDomain'],
-             ctx['transportModule'],
-             ctx['addrRewriteFun']) = self.SNMP_DOMAIN_MAP[
-                self.SNMP_DOMAIN_NAME_MAP.get(f, 'udp')
-            ]
-        if 'transportFormat' in ctx:
-            ctx['transportAddress'] = (
-                ctx['transportAddress'], ctx['transportFormat']
-            )
-            del ctx['transportFormat']
+            (
+                ctx["transportDomain"],
+                ctx["transportModule"],
+                ctx["addrRewriteFun"],
+            ) = self.SNMP_DOMAIN_MAP[self.SNMP_DOMAIN_NAME_MAP.get(f, "udp")]
+        if "transportFormat" in ctx:
+            ctx["transportAddress"] = (ctx["transportAddress"], ctx["transportFormat"])
+            del ctx["transportFormat"]
 
         else:
-            ctx['transportAddress'] = (ctx['transportAddress'], self.DEFAULT_PORT)
+            ctx["transportAddress"] = (ctx["transportAddress"], self.DEFAULT_PORT)
 
 
 class _TargetGeneratorTrapPassOne(_TargetGeneratorPassOne):
-    DEFAULT_PORT = '162'
+    DEFAULT_PORT = "162"
 
 
 class _TargetGeneratorPassTwo(base.GeneratorTemplate):
@@ -177,47 +180,47 @@ class _TargetGeneratorPassTwo(base.GeneratorTemplate):
 
         try:
             if len(node) > 2:
-                ctx['retryCount'] = int(node[2].attr)
+                ctx["retryCount"] = int(node[2].attr)
 
             else:
-                ctx['retryCount'] = int(node[1].attr)
+                ctx["retryCount"] = int(node[1].attr)
 
         except ValueError:
-            raise error.PySnmpError('Bad retry value')
+            raise error.PySnmpError("Bad retry value")
 
     def n_Timeout(self, cbCtx, node):
         snmpEngine, ctx = cbCtx
 
         try:
             if len(node) > 2:
-                ctx['timeout'] = int(node[2].attr) * 100
+                ctx["timeout"] = int(node[2].attr) * 100
 
             else:
-                ctx['timeout'] = int(node[1].attr) * 100
+                ctx["timeout"] = int(node[1].attr) * 100
 
         except Exception:
-            raise error.PySnmpError('Bad timeout value')
+            raise error.PySnmpError("Bad timeout value")
 
     def n_Agent_exit(self, cbCtx, node):
         snmpEngine, ctx = cbCtx
-        ctx['addrName'] = ctx['paramsName']
+        ctx["addrName"] = ctx["paramsName"]
 
         config.addTargetAddr(
             snmpEngine,
-            ctx['addrName'],
-            ctx['transportDomain'],
-            ctx['addrRewriteFun'](*ctx['transportAddress']),
-            ctx['paramsName'],
+            ctx["addrName"],
+            ctx["transportDomain"],
+            ctx["addrRewriteFun"](*ctx["transportAddress"]),
+            ctx["paramsName"],
             # net-snmp defaults
-            ctx.get('timeout', 100),
-            ctx.get('retryCount', 5),
-            tagList=ctx.get('transportTag', '')
+            ctx.get("timeout", 100),
+            ctx.get("retryCount", 5),
+            tagList=ctx.get("transportTag", ""),
         )
 
         config.addSocketTransport(
             snmpEngine,
-            ctx['transportDomain'],
-            ctx['transportModule']().openClientMode()
+            ctx["transportDomain"],
+            ctx["transportModule"]().openClientMode(),
         )
 
 

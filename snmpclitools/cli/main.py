@@ -13,19 +13,19 @@ try:
     from pysnmp import __version__ as PYSNMP_VERSION
 
 except ImportError:
-    PYSNMP_VERSION = 'N/A'
+    PYSNMP_VERSION = "N/A"
 
 try:
     from pysmi import __version__ as PYSMI_VERSION
 
 except ImportError:
-    PYSMI_VERSION = 'N/A'
+    PYSMI_VERSION = "N/A"
 
 try:
     from pyasn1 import __version__ as PYASN1_VERSION
 
 except ImportError:
-    PYASN1_VERSION = 'N/A'
+    PYASN1_VERSION = "N/A"
 
 try:
     from pysnmp import debug
@@ -39,52 +39,54 @@ from snmpclitools.cli import base
 
 def getUsage():
     return """\
-SNMP management tools %s, written by Ilya Etingof <etingof@gmail.com>
+SNMP management tools {}, written by Ilya Etingof <etingof@gmail.com>
 Software documentation and support at https://www.pysnmp.com
-Foundation libraries: pysmi %s, pysnmp %s, pyasn1 %s
-Python interpreter: %s
+Foundation libraries: pysmi {}, pysnmp {}, pyasn1 {}
+Python interpreter: {}
 Debugging options:
    -h                    display this help message
    -V                    software release information
    -d                    dump raw packets
-   -D category           enable debugging [%s]
-""" % (PYSNMP_APP_VERSION,
-       PYSMI_VERSION,
-       PYSNMP_VERSION,
-       PYASN1_VERSION,
-       sys.version.replace('\n', ''),
-       debug and ','.join(debug.flagMap.keys()) or "")
+   -D category           enable debugging [{}]
+""".format(
+        PYSNMP_APP_VERSION,
+        PYSMI_VERSION,
+        PYSNMP_VERSION,
+        PYASN1_VERSION,
+        sys.version.replace("\n", ""),
+        debug and ",".join(debug.flagMap.keys()) or "",
+    )
 
 
 # Scanner
 
-class MainScannerMixIn(object):
+
+class MainScannerMixIn:
     def t_help(self, s):
-        """ -h|--help """
-        self.rv.append(base.ConfigToken('help'))
+        """-h|--help"""
+        self.rv.append(base.ConfigToken("help"))
 
     def t_versioninfo(self, s):
-        """ -V|--version """
-        self.rv.append(base.ConfigToken('versioninfo'))
+        """-V|--version"""
+        self.rv.append(base.ConfigToken("versioninfo"))
 
     def t_dump(self, s):
-        """ -d """
-        self.rv.append(base.ConfigToken('dump'))
+        """-d"""
+        self.rv.append(base.ConfigToken("dump"))
 
     def t_debug(self, s):
-        """ -D|--debug """
-        self.rv.append(base.ConfigToken('debug'))
+        """-D|--debug"""
+        self.rv.append(base.ConfigToken("debug"))
 
 
 # Parser
 
-class MainParserMixIn(object):
-    START_SYMBOL = 'Cmdline'
+
+class MainParserMixIn:
+    START_SYMBOL = "Cmdline"
 
     def error(self, token):
-        raise error.PySnmpError(
-            'Command-line parser error at token %s\n' % token
-        )
+        raise error.PySnmpError("Command-line parser error at token %s\n" % token)
 
     def p_cmdline(self, args):
         """
@@ -115,6 +117,7 @@ class MainParserMixIn(object):
 
 # Generator
 
+
 class _MainGenerator(base.GeneratorTemplate):
     # SNMPv1/v2
     def n_VersionInfo(self, cbCtx, node):
@@ -125,7 +128,7 @@ class _MainGenerator(base.GeneratorTemplate):
 
     def n_Dump(self, cbCtx, node):
         if debug:
-            debug.setLogger(debug.Debug('io'))
+            debug.setLogger(debug.Debug("io"))
 
     def n_Debug(self, cbCtx, node):
         if debug:
@@ -133,14 +136,12 @@ class _MainGenerator(base.GeneratorTemplate):
                 f = node[2].attr
             else:
                 f = node[1].attr
-            debug.setLogger(debug.Debug(*f.split(',')))
+            debug.setLogger(debug.Debug(*f.split(",")))
 
 
 def generator(cbCtx, ast):
     snmpEngine, ctx = cbCtx
 
-    ctx['mibViewController'] = view.MibViewController(
-        snmpEngine.getMibBuilder()
-    )
+    ctx["mibViewController"] = view.MibViewController(snmpEngine.getMibBuilder())
 
     return _MainGenerator().preorder((snmpEngine, ctx), ast)

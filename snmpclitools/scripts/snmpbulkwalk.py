@@ -27,8 +27,8 @@ from snmpclitools.cli import target
 
 def getUsage():
     return """\
-Usage: %s [OPTIONS] <AGENT> <PARAMETERS>
-%s%s%s%s
+Usage: {} [OPTIONS] <AGENT> <PARAMETERS>
+{}{}{}{}
 GETBULK options:
 -C BULKOPTS:   set various application specific behaviours:
           n<NUM>   set non-repeaters to <NUM>
@@ -36,34 +36,44 @@ GETBULK options:
           c:       do not check returned OIDs are increasing
           t:       display wall-clock time to complete the request
           p:       print the number of variables found
-%s%s\
-""" % (os.path.basename(sys.argv[0]), main.getUsage(), msgmod.getUsage(),
-       secmod.getUsage(), mibview.getUsage(), target.getUsage(),
-       pdu.getReadUsage())
+{}{}\
+""".format(
+        os.path.basename(sys.argv[0]),
+        main.getUsage(),
+        msgmod.getUsage(),
+        secmod.getUsage(),
+        mibview.getUsage(),
+        target.getUsage(),
+        pdu.getReadUsage(),
+    )
 
 
 # Construct c/l interpreter for this app
 
-class Scanner(msgmod.MPScannerMixIn,
-              secmod.SMScannerMixIn,
-              mibview.MibViewScannerMixIn,
-              target.TargetScannerMixIn,
-              pdu.ReadPduScannerMixIn,
-              main.MainScannerMixIn,
-              base.ScannerTemplate):
+
+class Scanner(
+    msgmod.MPScannerMixIn,
+    secmod.SMScannerMixIn,
+    mibview.MibViewScannerMixIn,
+    target.TargetScannerMixIn,
+    pdu.ReadPduScannerMixIn,
+    main.MainScannerMixIn,
+    base.ScannerTemplate,
+):
     def t_appopts(self, s):
-        """ -C """
-        self.rv.append(base.ConfigToken('appopts'))
+        """-C"""
+        self.rv.append(base.ConfigToken("appopts"))
 
 
-class Parser(msgmod.MPParserMixIn,
-             secmod.SMParserMixIn,
-             mibview.MibViewParserMixIn,
-             target.TargetParserMixIn,
-             pdu.ReadPduParserMixIn,
-             main.MainParserMixIn,
-             base.ParserTemplate):
-
+class Parser(
+    msgmod.MPParserMixIn,
+    secmod.SMParserMixIn,
+    mibview.MibViewParserMixIn,
+    target.TargetParserMixIn,
+    pdu.ReadPduParserMixIn,
+    main.MainParserMixIn,
+    base.ParserTemplate,
+):
     def p_appOptions(self, args):
         """
         Option ::= ApplicationOption
@@ -74,7 +84,6 @@ class Parser(msgmod.MPParserMixIn,
 
 
 class __Generator(base.GeneratorTemplate):
-
     def n_ApplicationOption(self, cbCtx, node):
         snmpEngine, ctx = cbCtx
 
@@ -87,35 +96,35 @@ class __Generator(base.GeneratorTemplate):
         p = n = r = None
 
         for c in opt:
-            if c == 'n':
+            if c == "n":
                 p = n = []
 
-            elif c == 'r':
+            elif c == "r":
                 p = r = []
 
-            elif c == 'c':
-                ctx['ignoreNonIncreasingOids'] = 1
+            elif c == "c":
+                ctx["ignoreNonIncreasingOids"] = 1
                 p = None
 
-            elif c == 't':
-                ctx['displayWallClock'] = time.time()
+            elif c == "t":
+                ctx["displayWallClock"] = time.time()
                 p = None
 
-            elif c == 'p':
-                ctx['reportFoundVars'] = 1
+            elif c == "p":
+                ctx["reportFoundVars"] = 1
                 p = None
 
-            elif p is not None and '0' <= c <= '9':
+            elif p is not None and "0" <= c <= "9":
                 p.append(c)
 
             else:
                 raise error.PySnmpError('bad -C option - "%s"' % c)
 
         if n is not None:
-            ctx['nonRepeaters'] = int(''.join(n))
+            ctx["nonRepeaters"] = int("".join(n))
 
         if r is not None:
-            ctx['maxRepetitions'] = int(''.join(r))
+            ctx["maxRepetitions"] = int("".join(r))
 
 
 def generator(cbCtx, ast):
@@ -123,20 +132,29 @@ def generator(cbCtx, ast):
     return __Generator().preorder((snmpEngine, ctx), ast)
 
 
-def cbFun(snmpEngine, sendRequestHandle, errorIndication,
-          errorStatus, errorIndex, varBindTable, cbCtx):
-
+def cbFun(
+    snmpEngine,
+    sendRequestHandle,
+    errorIndication,
+    errorStatus,
+    errorIndex,
+    varBindTable,
+    cbCtx,
+):
     if errorIndication:
-        if (errorIndication != 'oidNotIncreasing' or
-                not ctx.get('ignoreNonIncreasingOids')):
-            sys.stderr.write('Error: %s\n' % errorIndication)
+        if errorIndication != "oidNotIncreasing" or not ctx.get(
+            "ignoreNonIncreasingOids"
+        ):
+            sys.stderr.write("Error: %s\n" % errorIndication)
             return
 
     if errorStatus:
         sys.stderr.write(
-            '%s at %s\n' %
-            (errorStatus.prettyPrint(),
-             errorIndex and varBindTable[0][int(errorIndex) - 1] or '?')
+            "%s at %s\n"
+            % (
+                errorStatus.prettyPrint(),
+                errorIndex and varBindTable[0][int(errorIndex) - 1] or "?",
+            )
         )
         return
 
@@ -147,21 +165,23 @@ def cbFun(snmpEngine, sendRequestHandle, errorIndication,
         for oid, val in varBindRow:
             colIdx += 1
 
-            if cbCtx['myHeadVars'][colIdx].isPrefixOf(oid):
+            if cbCtx["myHeadVars"][colIdx].isPrefixOf(oid):
                 sys.stdout.write(
-                    '%s\n' % cbCtx['mibViewProxy'].getPrettyOidVal(
-                        cbCtx['mibViewController'], oid, val
+                    "%s\n"
+                    % cbCtx["mibViewProxy"].getPrettyOidVal(
+                        cbCtx["mibViewController"], oid, val
                     )
                 )
                 inTableFlag += 1
 
-        if cbCtx.get('reportFoundVars'):
-            cbCtx['reportFoundVars'] += inTableFlag
+        if cbCtx.get("reportFoundVars"):
+            cbCtx["reportFoundVars"] += inTableFlag
 
         if not inTableFlag:
             return  # stop on end-of-table
 
     return True  # continue walking
+
 
 def start():
     # Run SNMP engine
@@ -172,9 +192,7 @@ def start():
 
     try:
         # Parse c/l into AST
-        ast = Parser().parse(
-            Scanner().tokenize(' '.join(sys.argv[1:]))
-        )
+        ast = Parser().parse(Scanner().tokenize(" ".join(sys.argv[1:])))
 
         # Apply configuration to SNMP entity
         main.generator((snmpEngine, ctx), ast)
@@ -185,39 +203,42 @@ def start():
         pdu.readPduGenerator((snmpEngine, ctx), ast)
         generator((snmpEngine, ctx), ast)
 
-        ctx['myHeadVars'] = [rfc1902.ObjectName(x[0]) for x in ctx['varBinds']]
+        ctx["myHeadVars"] = [rfc1902.ObjectName(x[0]) for x in ctx["varBinds"]]
 
         cmdgen.BulkCommandGenerator().sendVarBinds(
             snmpEngine,
-            ctx['addrName'],
-            ctx.get('contextEngineId'), ctx.get('contextName', ''),
-            ctx.get('nonRepeaters', 0), ctx.get('maxRepetitions', 25),
-            ctx['varBinds'],
-            cbFun, ctx
+            ctx["addrName"],
+            ctx.get("contextEngineId"),
+            ctx.get("contextName", ""),
+            ctx.get("nonRepeaters", 0),
+            ctx.get("maxRepetitions", 25),
+            ctx["varBinds"],
+            cbFun,
+            ctx,
         )
 
         snmpEngine.transportDispatcher.runDispatcher()
 
     except KeyboardInterrupt:
-        sys.stderr.write('Shutting down...\n')
+        sys.stderr.write("Shutting down...\n")
 
     except error.PySnmpError:
-        sys.stderr.write('Error: %s\n%s' % (sys.exc_info()[1], getUsage()))
+        sys.stderr.write(f"Error: {sys.exc_info()[1]}\n{getUsage()}")
         sys.exit(1)
 
     except Exception:
-        sys.stderr.write('Process terminated: %s\n' % sys.exc_info()[1])
+        sys.stderr.write("Process terminated: %s\n" % sys.exc_info()[1])
 
         for line in traceback.format_exception(*sys.exc_info()):
-            sys.stderr.write(line.replace('\n', ';'))
+            sys.stderr.write(line.replace("\n", ";"))
 
         sys.exit(1)
 
-    if ctx.get('reportFoundVars'):
-        sys.stdout.write(
-            'Variables found: %s\n' % (ctx['reportFoundVars'] - 1))
+    if ctx.get("reportFoundVars"):
+        sys.stdout.write("Variables found: %s\n" % (ctx["reportFoundVars"] - 1))
 
-    if ctx.get('displayWallClock'):
+    if ctx.get("displayWallClock"):
         sys.stdout.write(
-            'Total traversal time = %.4f seconds'
-            '\n' % (time.time() - ctx['displayWallClock']))
+            "Total traversal time = %.4f seconds"
+            "\n" % (time.time() - ctx["displayWallClock"])
+        )

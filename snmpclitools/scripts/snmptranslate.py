@@ -24,8 +24,8 @@ from snmpclitools.cli import pdu
 
 def getUsage():
     return """\
-Usage: %s [OPTIONS] <PARAMETERS>
-%s%s
+Usage: {} [OPTIONS] <PARAMETERS>
+{}{}
 TRANSLATE options:
    -T TRANSOPTS   Set various options controlling report produced:
               d:  print full details of the given OID
@@ -33,28 +33,35 @@ TRANSLATE options:
               l:  enable labeled OID report
               o:  enable OID report
               s:  enable dotted symbolic report
-%s\
-""" % (os.path.basename(sys.argv[0]),
-       main.getUsage(),
-       mibview.getUsage(),
-       pdu.getReadUsage())
+{}\
+""".format(
+        os.path.basename(sys.argv[0]),
+        main.getUsage(),
+        mibview.getUsage(),
+        pdu.getReadUsage(),
+    )
 
 
 # Construct c/l interpreter for this app
 
-class Scanner(mibview.MibViewScannerMixIn,
-              pdu.ReadPduScannerMixIn,
-              main.MainScannerMixIn,
-              base.ScannerTemplate):
+
+class Scanner(
+    mibview.MibViewScannerMixIn,
+    pdu.ReadPduScannerMixIn,
+    main.MainScannerMixIn,
+    base.ScannerTemplate,
+):
     def t_transopts(self, s):
-        """ -T """
-        self.rv.append(base.ConfigToken('transopts'))
+        """-T"""
+        self.rv.append(base.ConfigToken("transopts"))
 
 
-class Parser(mibview.MibViewParserMixIn,
-             pdu.ReadPduParserMixIn,
-             main.MainParserMixIn,
-             base.ParserTemplate):
+class Parser(
+    mibview.MibViewParserMixIn,
+    pdu.ReadPduParserMixIn,
+    main.MainParserMixIn,
+    base.ParserTemplate,
+):
     def p_transOptions(self, args):
         """
         Cmdline ::= Options whitespace Params
@@ -71,7 +78,7 @@ class Parser(mibview.MibViewParserMixIn,
 class _Generator(base.GeneratorTemplate):
     def n_TranslateOption(self, cbCtx, node):
         snmpEngine, ctx = cbCtx
-        mibViewProxy = ctx['mibViewProxy']
+        mibViewProxy = ctx["mibViewProxy"]
 
         if len(node) > 2:
             opt = node[2].attr
@@ -82,24 +89,24 @@ class _Generator(base.GeneratorTemplate):
         for c in opt:
             mibViewProxy.translateMassMode = 1
 
-            if c == 'd':
+            if c == "d":
                 mibViewProxy.translateFullDetails = 1
                 mibViewProxy.translateMassMode = 0
 
-            elif c == 'a':
+            elif c == "a":
                 mibViewProxy.translateTrivial = 1
 
-            elif c == 'l':
+            elif c == "l":
                 mibViewProxy.translateLabeledOid = 1
 
-            elif c == 'o':
+            elif c == "o":
                 mibViewProxy.translateNumericOid = 1
 
-            elif c == 's':
+            elif c == "s":
                 mibViewProxy.translateSymbolicOid = 1
 
             else:
-                raise error.PySnmpError('unsupported sub-option \"%s\"' % c)
+                raise error.PySnmpError('unsupported sub-option "%s"' % c)
 
 
 def generator(cbCtx, ast):
@@ -127,53 +134,51 @@ class MibViewProxy(mibview.MibViewProxy):
         prefix, label, suffix = mibViewController.getNodeName(oid)
         modName, nodeDesc, _suffix = mibViewController.getNodeLocation(prefix)
 
-        mibNode, = mibViewController.mibBuilder.importSymbols(
-            modName, nodeDesc
-        )
+        (mibNode,) = mibViewController.mibBuilder.importSymbols(modName, nodeDesc)
 
-        out = ''
+        out = ""
 
         if self.translateFullDetails:
             if suffix:
-                out = '%s::%s' % (modName, nodeDesc)
-                out += ' [ %s ]' % '.'.join([str(x) for x in suffix])
-                out += '\n'
+                out = f"{modName}::{nodeDesc}"
+                out += " [ %s ]" % ".".join([str(x) for x in suffix])
+                out += "\n"
 
             else:
-                out += '%s::%s\n%s ::= { %s }' % (
+                out += "{}::{}\n{} ::= {{ {} }}".format(
                     modName,
                     nodeDesc,
                     mibNode.asn1Print(),
-                    ' '.join(map(lambda x, y: '%s(%s)' % (y, x), prefix, label))
+                    " ".join(map(lambda x, y: f"{y}({x})", prefix, label)),
                 )
 
         elif self.translateTrivial:
-            out = '%s ::= { %s %s' % (
-                len(label) > 1 and label[-2] or ".", label[-1], prefix[-1]
+            out = "{} ::= {{ {} {}".format(
+                len(label) > 1 and label[-2] or ".",
+                label[-1],
+                prefix[-1],
             )
 
             if suffix:
-                out += ' [ %s ]' % '.'.join([str(x) for x in suffix])
+                out += " [ %s ]" % ".".join([str(x) for x in suffix])
 
-            out += ' }'
+            out += " }"
 
         elif self.translateLabeledOid:
-            out = '.' + '.'.join(
-                map(lambda x, y: '%s(%s)' % (y, x), prefix, label)
-            )
+            out = "." + ".".join(map(lambda x, y: f"{y}({x})", prefix, label))
 
             if suffix:
-                out += ' [ %s ]' % '.'.join([str(x) for x in suffix])
+                out += " [ %s ]" % ".".join([str(x) for x in suffix])
 
         elif self.translateNumericOid:
-            out = '.' + '.'.join([str(x) for x in prefix])
+            out = "." + ".".join([str(x) for x in prefix])
             if suffix:
-                out += ' [ %s ]' % '.'.join([str(x) for x in suffix])
+                out += " [ %s ]" % ".".join([str(x) for x in suffix])
 
         elif self.translateSymbolicOid:
-            out = '.' + '.'.join(label)
+            out = "." + ".".join(label)
             if suffix:
-                out += ' [ %s ]' % '.'.join([str(x) for x in suffix])
+                out += " [ %s ]" % ".".join([str(x) for x in suffix])
 
         if not out:
             out = mibview.MibViewProxy.getPrettyOidVal(
@@ -182,8 +187,8 @@ class MibViewProxy(mibview.MibViewProxy):
 
         return out
 
-def start():
 
+def start():
     snmpEngine = engine.SnmpEngine()
 
     # Load up MIB texts (DESCRIPTION, etc.)
@@ -194,49 +199,47 @@ def start():
 
     try:
         # Parse c/l into AST
-        ast = Parser().parse(
-            Scanner().tokenize(' '.join(sys.argv[1:]))
-        )
+        ast = Parser().parse(Scanner().tokenize(" ".join(sys.argv[1:])))
 
         # Apply configuration to SNMP entity
         main.generator((snmpEngine, ctx), ast)
-        ctx['mibViewProxy'] = MibViewProxy(ctx['mibViewController'])
+        ctx["mibViewProxy"] = MibViewProxy(ctx["mibViewController"])
         mibview.generator((snmpEngine, ctx), ast)
         pdu.readPduGenerator((snmpEngine, ctx), ast)
         generator((snmpEngine, ctx), ast)
 
     except KeyboardInterrupt:
-        sys.stderr.write('Shutting down...\n')
+        sys.stderr.write("Shutting down...\n")
 
     except error.PySnmpError:
-        sys.stderr.write('Error: %s\n%s' % (sys.exc_info()[1], getUsage()))
+        sys.stderr.write(f"Error: {sys.exc_info()[1]}\n{getUsage()}")
         sys.exit(1)
 
     except Exception:
-        sys.stderr.write('Process terminated: %s\n' % sys.exc_info()[1])
+        sys.stderr.write("Process terminated: %s\n" % sys.exc_info()[1])
         for line in traceback.format_exception(*sys.exc_info()):
-            sys.stderr.write(line.replace('\n', ';'))
+            sys.stderr.write(line.replace("\n", ";"))
         sys.exit(1)
 
-    ctx['mibViewProxy'].buildValue = 0  # disable value printout
+    ctx["mibViewProxy"].buildValue = 0  # disable value printout
 
-    for oid, val in ctx['varBinds']:
-
+    for oid, val in ctx["varBinds"]:
         while True:
             if val is None:
                 val = univ.Null()
 
             sys.stdout.write(
-                '%s\n' % ctx['mibViewProxy'].getPrettyOidVal(
-                    ctx['mibViewController'], oid, val
+                "%s\n"
+                % ctx["mibViewProxy"].getPrettyOidVal(
+                    ctx["mibViewController"], oid, val
                 )
             )
 
-            if not ctx['mibViewProxy'].translateMassMode:
+            if not ctx["mibViewProxy"].translateMassMode:
                 break
 
             try:
-                oid, label, suffix = ctx['mibViewController'].getNextNodeName(oid)
+                oid, label, suffix = ctx["mibViewController"].getNextNodeName(oid)
 
             except NoSuchObjectError:
                 break
