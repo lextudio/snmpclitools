@@ -44,8 +44,7 @@ $ pip install snmpclitools-lextudio
 How to use the tools
 --------------------
 
-The most of pysnmp command-line tools could be run in a similar way as 
-their Net-SNMP counterparts. For example:
+The most of pysnmp command-line tools could be run in a similar way as their Net-SNMP counterparts. For example:
 
 ```bash
 $ snmpbulkwalk -v3 -u usr-md5-des -l authPriv -A authkey1 -X privkey1 demo.pysnmp.com system
@@ -78,10 +77,8 @@ your question [to Stack Overflow](https://stackoverflow.com/questions/ask).
 Feedback and collaboration
 --------------------------
 
-I'm interested in bug reports, fixes, suggestions and improvements. Your
-pull requests are very welcome!
+Your pull requests are very welcome!
 
 Copyright (c) 2005-2019, [Ilya Etingof](mailto:etingof@gmail.com).
-Copyright (c) 2022-2023, [LeXtudio Inc.](mailto:support@lextudio.com).
+Copyright (c) 2022-2024, [LeXtudio Inc.](mailto:support@lextudio.com).
 All rights reserved.
-
