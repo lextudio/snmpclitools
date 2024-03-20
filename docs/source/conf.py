@@ -40,11 +40,11 @@ extensions = [
     "sphinx_copybutton",
 ]
 
-html_baseurl = "https://www.pysnmp.com/snmpclitools/"
+html_baseurl = "https://docs.lextudio.com/snmpclitools/"
 sitemap_url_scheme = "{link}"
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = [".templates"]
+templates_path = ["_templates"]
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -65,7 +65,7 @@ author = "LeXtudio Inc. <support@lextudio.com>"
 # built documents.
 #
 # The short X.Y version.
-version = "0.6"
+version = "0.7"
 # The full version, including alpha/beta/rc tags.
 release = "0.7.0"
 
@@ -83,6 +83,7 @@ exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
+pygments_dark_style = "monokai"
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
@@ -90,33 +91,46 @@ todo_include_todos = False
 
 # -- Options for HTML output ----------------------------------------------
 
-html_context = {
-    "display_github": True,
-    "github_user": "lextudio",
-    "github_repo": "pysnmp",
-    "github_version": "main/docs/source/",
-}
-
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
+html_theme = "furo"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    "source_repository": "https://github.com/lextudio/snmpclitools",
+    "source_branch": "main",
+    "source_directory": "docs/source/",
+    "footer_icons": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/lextudio/snmpclitools",
+            "html": "",
+            "class": "fa-brands fa-solid fa-github fa-2x",
+        },
+    ],
+}
+
+html_css_files = [
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css",
+]
+
+html_title = "SNMP Commands Documentation"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = ".static/favicon.ico"
+html_favicon = "_static/favicon.ico"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = [".static"]
+html_static_path = ["_static"]
 
 # If true, links to the reST sources are added to the pages.
 # html_show_sourcelink = False
@@ -189,9 +203,9 @@ texinfo_documents = [
 
 # Configuration for Intersphinx
 intersphinx_mapping = {
-    "python": ("https://docs.python.org/3.7/", None),
+    "python": ("https://docs.python.org/3/", None),
     "pyasn1": ("https://pyasn1.readthedocs.io/", None),
-    "pysmi": ("https://www.pysnmp.com/pysmi/", None),
+    "pysmi": ("https://docs.lextudio.com/pysmi/", None),
 }
 
 # this merges constructor docstring with class docstring
@@ -218,5 +232,5 @@ def setup(app):
         """Insert Google Analytics tracker
         Based on this Stackoverflow suggestion: https://stackoverflow.com/a/41885884
         """
-        app.add_js_file("https://www.googletagmanager.com/gtag/js?id=G-DYQGY4MKR3")
+        app.add_js_file("https://www.googletagmanager.com/gtag/js?id=G-DFLYZZK12P")
         app.add_js_file("google_analytics_tracker.js")
