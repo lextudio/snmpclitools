@@ -2,7 +2,7 @@
 name = "snmpclitools-lextudio"
 version = "0.7.0"
 description = "A collection of command-line tools for SNMP management purposes built on top of PySNMP package."
-authors = ["Ilya Etingof <etingof@gmail.com>", "Lex Li <support@lextudio.com>"]
+authors = ["Ilya Etingof <etingof@gmail.com>", "LeXtudio Inc. <support@lextudio.com>"]
 license = "BSD-2-Clause"
 repository = "https://github.com/lextudio/snmpclitools"
 classifiers = [
