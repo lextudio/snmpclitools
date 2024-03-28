@@ -35,7 +35,7 @@ pysnmp-lextudio = "^6.0.0"
 [tool.poetry.group.dev.dependencies]
 Sphinx = "^5.0.0"
 sphinx-copybutton = "^0.5.2"
-sphinx-sitemap = "^2.5.1"
+sphinx-sitemap-lextudio = "^2.5.2"
 pytest = "^6.2.5"
 pytest-codecov = "^0.4.0"
 black = "^23.1.0"
