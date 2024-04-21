@@ -41,6 +41,7 @@ pytest-codecov = "^0.4.0"
 black = "^23.1.0"
 pre-commit = "^2.21.0"
 furo = "^2023.1.1"
+sphinx-notfound-page = "^1.0.0"
 
 [tool.poetry_bumpversion.file."snmpclitools/__init__.py"]
 

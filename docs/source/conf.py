@@ -38,7 +38,10 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx_sitemap",
     "sphinx_copybutton",
+    "notfound.extension",
 ]
+
+notfound_urls_prefix = "/snmpclitools/"
 
 html_baseurl = "https://docs.lextudio.com/snmpclitools/"
 sitemap_url_scheme = "{link}"
