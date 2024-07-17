@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "snmpclitools-lextudio"
+name = "snmpclitools"
 version = "0.7.0"
 description = "A collection of command-line tools for SNMP management purposes built on top of PySNMP package."
 authors = ["Ilya Etingof <etingof@gmail.com>", "LeXtudio Inc. <support@lextudio.com>"]
@@ -30,7 +30,7 @@ include = ["docs", "tests", "examples"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-pysnmp-lextudio = "^6.0.0"
+pysnmp = "^6.0.0"
 
 [tool.poetry.group.dev.dependencies]
 Sphinx = "^5.0.0"

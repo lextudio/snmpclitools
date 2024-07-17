@@ -2,9 +2,9 @@
 Command-line SNMP tools
 -----------------------
 
-[![PyPI](https://img.shields.io/pypi/v/snmpclitools-lextudio.svg?maxAge=2592000)](https://pypi.org/project/snmpclitools-lextudio)
-[![PyPI Downloads](https://img.shields.io/pypi/dd/snmpclitools-lextudio)](https://pypi.python.org/pypi/snmpclitools-lextudio/)
-[![Python Versions](https://img.shields.io/pypi/pyversions/snmpclitools-lextudio.svg)](https://pypi.org/project/snmpclitools-lextudio/)
+[![PyPI](https://img.shields.io/pypi/v/snmpclitools.svg?maxAge=2592000)](https://pypi.org/project/snmpclitools)
+[![PyPI Downloads](https://img.shields.io/pypi/dd/snmpclitools)](https://pypi.python.org/pypi/snmpclitools/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/snmpclitools.svg)](https://pypi.org/project/snmpclitools/)
 [![GitHub license](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/lextudio/snmpclitools/master/LICENSE.rst)
 
 This is a collection of command-line SNMP tools written in pure-Python.
@@ -35,10 +35,10 @@ available as a Github [repo](https://github.com/lextudio/snmpclitools).
 Installation
 ------------
 
-Download snmpclitools from [PyPI](https://pypi.org/project/snmpclitools-lextudio) or just run:
+Download snmpclitools from [PyPI](https://pypi.org/project/snmpclitools) or just run:
 
 ```bash
-$ pip install snmpclitools-lextudio
+$ pip install snmpclitools
 ```
 
 How to use the tools

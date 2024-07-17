@@ -105,9 +105,9 @@ Best way is usually to
 
 .. code-block:: bash
 
-   # pip install snmpclitools-lextudio
-   
-If that does not work for you for some reason, you might need to read the 
+   # pip install snmpclitools
+
+If that does not work for you for some reason, you might need to read the
 following page.
 
 .. toctree::
