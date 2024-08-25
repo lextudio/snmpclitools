@@ -208,11 +208,13 @@ def start():
         pdu.readPduGenerator((snmpEngine, ctx), ast)
         generator((snmpEngine, ctx), ast)
 
+        sys.stdout.write("Press Ctrl-C to stop.\n")
+
     except KeyboardInterrupt:
         sys.stderr.write("Shutting down...\n")
 
     except error.PySnmpError:
-        sys.stderr.write(f"Error: {sys.exc_info()[1]}\n{getUsage()}")
+        sys.stderr.write(f"Error: {sys.exc_info()[1]}")
         sys.exit(1)
 
     except Exception:

@@ -17,6 +17,7 @@ from pysnmp.entity import engine
 from pysnmp.entity.rfc3413 import ntforg
 from pysnmp.proto.api import v1, v2c
 from pysnmp.proto.proxy import rfc2576
+from pysnmp.proto.rfc1902 import OctetString
 
 from snmpclitools.cli import base
 from snmpclitools.cli import main
@@ -250,7 +251,7 @@ def cbFun(snmpEngine, notificationHandle, errorIndication, pdu, cbCtx):
 
 
 def start():
-    snmpEngine = engine.SnmpEngine()
+    snmpEngine = engine.SnmpEngine(OctetString(hexValue="8000000001020304"))
 
     try:
         # Parse c/l into AST
@@ -274,6 +275,12 @@ def start():
         else:
             v2c.apiPDU.setVarBinds(ctx["pdu"], v2c.apiPDU.getVarBinds(ctx["pdu"]))
 
+        if "informMode" not in ctx and ctx["versionId"] == 3:  # TRAP v3 only
+            if snmpEngine.snmpEngineID != ctx["securityEngineId"]:
+                raise error.PySnmpError(
+                    f"TRAP message must be sent from engine ID: {snmpEngine.snmpEngineID.prettyPrint()} but got: {ctx['securityEngineId'].prettyPrint()}"
+                )
+
         ntforg.NotificationOriginator().sendPdu(
             snmpEngine,
             ctx["addrName"],
@@ -284,13 +291,15 @@ def start():
             ctx,
         )
 
+        sys.stdout.write("Press Ctrl-C to stop.\n")
+
         snmpEngine.transportDispatcher.runDispatcher()
 
     except KeyboardInterrupt:
         sys.stderr.write("Shutting down...\n")
 
     except error.PySnmpError:
-        sys.stderr.write(f"Error: {sys.exc_info()[1]}\n{getUsage()}")
+        sys.stderr.write(f"Error: {sys.exc_info()[1]}")
         sys.exit(1)
 
     except Exception:
