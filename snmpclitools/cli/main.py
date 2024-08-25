@@ -39,7 +39,7 @@ from snmpclitools.cli import base
 
 def getUsage():
     return """\
-SNMP management tools {}, written by Ilya Etingof <etingof@gmail.com>
+SNMP management tools {}, maintained by LeXtudio Inc. <support@lextudio.com>
 Software documentation and support at https://www.pysnmp.com
 Foundation libraries: pysmi {}, pysnmp {}, pyasn1 {}
 Python interpreter: {}

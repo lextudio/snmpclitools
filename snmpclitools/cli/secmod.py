@@ -13,10 +13,10 @@ from snmpclitools.cli import base
 AUTH_PROTOCOLS = {
     "MD5": config.usmHMACMD5AuthProtocol,
     "SHA": config.usmHMACSHAAuthProtocol,
-    "SHA224": config.usmHMAC128SHA224AuthProtocol,
-    "SHA256": config.usmHMAC192SHA256AuthProtocol,
-    "SHA384": config.usmHMAC256SHA384AuthProtocol,
-    "SHA512": config.usmHMAC384SHA512AuthProtocol,
+    "SHA-224": config.usmHMAC128SHA224AuthProtocol,
+    "SHA-256": config.usmHMAC192SHA256AuthProtocol,
+    "SHA-384": config.usmHMAC256SHA384AuthProtocol,
+    "SHA-512": config.usmHMAC384SHA512AuthProtocol,
     "NONE": config.usmNoAuthProtocol,
 }
 
@@ -24,11 +24,11 @@ PRIV_PROTOCOLS = {
     "DES": config.usmDESPrivProtocol,
     "3DES": config.usm3DESEDEPrivProtocol,
     "AES": config.usmAesCfb128Protocol,
-    "AES128": config.usmAesCfb128Protocol,
-    "AES192": config.usmAesCfb192Protocol,
-    "AES192BLMT": config.usmAesBlumenthalCfb192Protocol,
-    "AES256": config.usmAesCfb256Protocol,
-    "AES256BLMT": config.usmAesBlumenthalCfb256Protocol,
+    "AES-128": config.usmAesCfb128Protocol,
+    "AES-192": config.usmAesCfb192Protocol,
+    "AES-192-BLMT": config.usmAesBlumenthalCfb192Protocol,
+    "AES-256": config.usmAesCfb256Protocol,
+    "AES-256-BLMT": config.usmAesBlumenthalCfb256Protocol,
     "NONE": config.usmNoPrivProtocol,
 }
 
@@ -55,8 +55,8 @@ SNMPv3 security options:
                          authentication and encryption keys (-3k and -3K
                          respectively).
 """.format(
-        "|".join(sorted(x for x in AUTH_PROTOCOLS if x != "NONE")),
-        "|".join(sorted(x for x in PRIV_PROTOCOLS if x != "NONE")),
+        "|".join(x for x in AUTH_PROTOCOLS if x != "NONE"),
+        "|".join(x for x in PRIV_PROTOCOLS if x != "NONE"),
     )
 
 

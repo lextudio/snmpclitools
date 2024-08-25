@@ -57,13 +57,13 @@ can be chosen via the *-a* option:
 +--------+----------------+-------------+
 | SHA    | HMAC SHA-1 128 | RFC3414     |
 +--------+----------------+-------------+
-| SHA224 | HMAC SHA-2 224 | RFC7860     |
+| SHA-224 | HMAC SHA-2 224 | RFC7860     |
 +--------+----------------+-------------+
-| SHA256 | HMAC SHA-2 256 | RFC7860     |
+| SHA-256 | HMAC SHA-2 256 | RFC7860     |
 +--------+----------------+-------------+
-| SHA384 | HMAC SHA-2 384 | RFC7860     |
+| SHA-384 | HMAC SHA-2 384 | RFC7860     |
 +--------+----------------+-------------+
-| SHA512 | HMAC SHA-2 512 | RFC7860     |
+| SHA-512 | HMAC SHA-2 512 | RFC7860     |
 +--------+----------------+-------------+
 
 SNMPv3 authentication key
@@ -92,13 +92,13 @@ protocols can be chosen via the *-x* option:
 +------------+------------------------+----------------------+
 | AES        | AES CFB 128            | RFC3826              |
 +------------+------------------------+----------------------+
-| AES192     | AES CFB 192            | RFC Draft            |
+| AES-192     | AES CFB 192            | RFC Draft            |
 +------------+------------------------+----------------------+
-| AES256     | AES CFB 256            | RFC Draft            |
+| AES-256     | AES CFB 256            | RFC Draft            |
 +------------+------------------------+----------------------+
-| AES192BLMT | AES CFB 192 Blumenthal | RFC Draft            |
+| AES-192-BLMT | AES CFB 192 Blumenthal | RFC Draft            |
 +------------+------------------------+----------------------+
-| AES256BLMT | AES CFB 256 Blumenthal | RFC Draft            |
+| AES-256-BLMT | AES CFB 256 Blumenthal | RFC Draft            |
 +------------+------------------------+----------------------+
 | 3DES       | Triple DES EDE         | RFC Draft            |
 +------------+------------------------+----------------------+

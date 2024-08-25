@@ -18,12 +18,12 @@ Features
 
 * Complete SNMPv1/v2c and SNMPv3 support
 * Interface compatible (almost) with Net-SNMP's snmp\* tools.
-* SNMPv3 USM supports MD5/SHA/SHA224/SHA256/SHA384/SHA512 auth and
-  DES/3DES/AES128/AES192/AES256 privacy crypto algorithms
+* SNMPv3 USM supports MD5/SHA/SHA-224/SHA-256/SHA-384/SHA-512 auth and
+  DES/3-DES/AES-128/AES-192/AES-256 privacy crypto algorithms
 * Automatically downloads required MIBs from the Internet
 * Runs over IPv4 and/or IPv6 transports
-* Cross-platform: works on Linux, Windows and OS X.
-* 100% Python, works with Python 3.7+
+* Cross-platform: works on Linux, Windows and macOS.
+* 100% Python, works with Python 3.8+
 
 Download
 --------

@@ -94,6 +94,7 @@ class Parser(
         Uptime ::= string
 
         TrapV2cParams ::= Uptime whitespace TrapOid whitespace VarBinds
+        TrapV2cParams ::= Uptime whitespace TrapOid
         TrapOid ::= string
         """
 
@@ -266,9 +267,12 @@ def start():
         pdu.writePduGenerator((snmpEngine, ctx), ast)
         generator((snmpEngine, ctx), ast)
 
-        v2c.apiPDU.setVarBinds(
-            ctx["pdu"], v2c.apiPDU.getVarBinds(ctx["pdu"]) + ctx["varBinds"]
-        )
+        if "varBinds" in ctx:
+            v2c.apiPDU.setVarBinds(
+                ctx["pdu"], v2c.apiPDU.getVarBinds(ctx["pdu"]) + ctx["varBinds"]
+            )
+        else:
+            v2c.apiPDU.setVarBinds(ctx["pdu"], v2c.apiPDU.getVarBinds(ctx["pdu"]))
 
         ntforg.NotificationOriginator().sendPdu(
             snmpEngine,
