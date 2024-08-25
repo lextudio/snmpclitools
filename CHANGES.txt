@@ -1,67 +1,73 @@
-Revision 0.7.1, released 16-07-2024
------------------------------------
+Revision 0.7.2, released on Aug 24, 2024
+----------------------------------------
+
+- Fixed many bugs in snmptrap.
+- Revised command line hints.
+
+Revision 0.7.1, released on Jul 16, 2024
+----------------------------------------
 
 - Removed package postfix.
 
-Revision 0.7.0, released 03-03-2024
------------------------------------
+Revision 0.7.0, released on Mar 03, 2024
+----------------------------------------
 
 - Changed web site to pysnmp.com.
 
-Revision 0.6.4, released 11-08-2019
------------------------------------
+Revision 0.6.4, released on Aug 11, 2019
+----------------------------------------
 
 - Added support for specifying master or localized SNMPv3 USM
   keys (-3[mMkK] options)
 - PEP8'ed the whole project
 
-Revision 0.6.3, released 14-04-2019
------------------------------------
+Revision 0.6.3, released on Apr 14, 2019
+----------------------------------------
 
 - Upper constraint pysnmp to 5.0.0 in setup.py as well
 - Upper constraint pysmi to 0.4.0 and lower constraint it to 0.3.4+
 - Fixed broken -M and -P options to make non-default MIB paths
   operational
 
-Revision 0.6.2, released 30-12-2018
------------------------------------
+Revision 0.6.2, released on Dec 30, 2018
+----------------------------------------
 
 - Bumped upper Python version to 3.7
 - Copyright extended towards 2019
 - Fixed Sphinx links in docs
 
-Revision 0.6.1, released 07-01-2018
------------------------------------
+Revision 0.6.1, released on Jan 07, 2018
+----------------------------------------
 
 - The pysnmp-apps project renamed into a hopefully more meaningful
   snmpclitools
 
-Revision 0.5.3, released 06-01-2018
------------------------------------
+Revision 0.5.3, released on Jan 06, 2018
+----------------------------------------
 
 - Added Sphinx docs for the command-line tools
 - The *-Oe* option implemented to disable integer/bits enumeration
   rendering.
 - Copyright extended towards 2018
 
-Revision 0.5.2, released 22-12-2017
------------------------------------
+Revision 0.5.2, released on Dec 22, 2017
+----------------------------------------
 
 - Fixed SNMP crypto algorithm identifiers to be named consistently after
   key length rather than MAC length
 - Added strong AES privacy algorithms with Blumenthal key localization
 - Fix to allow longer USM user names (up to 32 octets)
 
-Revision 0.5.1, released 21-11-2017
------------------------------------
+Revision 0.5.1, released on Nov 21, 2017
+----------------------------------------
 
 - Added strong crypto support
 - CLI tools usage aligned with the Net-SNMP prototypes for
   mocking consistency
 - Migrated references from SourceForge
 
-Revision 0.4.2, released 09-08-2017
------------------------------------
+Revision 0.4.2, released on Aug 09, 2017
+----------------------------------------
 
 - Harden values renderer against broken SNMP indices
 - Bumped pysnmp dependency to 4.3.9
@@ -70,15 +76,15 @@ Revision 0.4.2, released 09-08-2017
 - Source code PEP8'ed
 - Author's e-mail changed, copyright extended towards 2017
 
-Revision 0.4.1, released 12-02-2016
------------------------------------
+Revision 0.4.1, released on Feb 12, 2016
+----------------------------------------
 
 - Copyright notice added to non-trivial source code files.
 - Fix to stray trailing OID lurking to snmp*walk.py output.
 - Fix to __doc__ use in setup.py to make -O0 installation mode working.
 
-Revision 0.4.0, released 28-09-2015
------------------------------------
+Revision 0.4.0, released on Sep 28, 2015
+----------------------------------------
 
 - All apps renamed into snmp*.py and moved to scripts/ directory
   for a more conventional layout.
@@ -89,8 +95,8 @@ Revision 0.4.0, released 28-09-2015
 - Conditional variable buildValueOnly replaced with two buildObjectName
   and buildValue at MibViewProxy.
 
-Revision 0.3.4, released 05-10-2013
------------------------------------
+Revision 0.3.4, released on Oct 05, 2013
+----------------------------------------
 
 - License updated to vanilla BSD 2-Clause to ease package use
   (http://opensource.org/licenses/BSD-2-Clause).
@@ -100,22 +106,22 @@ Revision 0.3.4, released 05-10-2013
   pysnmp LCD model does not require tagging transport address to bind it
   with communityName.
 
-Revision 0.3.3, released 30-01-2013
------------------------------------
+Revision 0.3.3, released on Jan 30, 2013
+----------------------------------------
 
 - Tools will report snmpclitools package version along with pysnmp version
   being used.
 - Package meta-information updated.
 - Package version is now in __init__.__version__
 
-Revision 0.3.2, released 21-04-2012
------------------------------------
+Revision 0.3.2, released on Apr 21, 2012
+----------------------------------------
 
 - MIB path mangiling reworked
 - Fix to make pysnmptrap INFORM C/L switch operational
 
-Revision 0.3.1, released 06-11-2011
------------------------------------
+Revision 0.3.1, released on Nov 06, 2011
+----------------------------------------
 
 - Major overhawl for Python 2.4 -- 3.2 compatibility:
 

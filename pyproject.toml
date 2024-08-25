@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "snmpclitools"
-version = "0.7.1"
+version = "0.7.2"
 description = "A collection of command-line tools for SNMP management purposes built on top of PySNMP package."
 authors = ["Ilya Etingof <etingof@gmail.com>", "LeXtudio Inc. <support@lextudio.com>"]
 license = "BSD-2-Clause"
