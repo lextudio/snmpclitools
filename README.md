@@ -80,5 +80,5 @@ Feedback and collaboration
 Your pull requests are very welcome!
 
 Copyright (c) 2005-2019, [Ilya Etingof](mailto:etingof@gmail.com).
-Copyright (c) 2022-2024, [LeXtudio Inc.](mailto:support@lextudio.com).
+Copyright (c) 2022-2026, [LeXtudio Inc.](mailto:support@lextudio.com).
 All rights reserved.
