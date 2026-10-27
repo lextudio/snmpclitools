@@ -145,3 +145,31 @@ def generator(cbCtx, ast):
     ctx["mibViewController"] = view.MibViewController(snmpEngine.getMibBuilder())
 
     return _MainGenerator().preorder((snmpEngine, ctx), ast)
+
+
+def runDispatcher(snmpEngine, ctx):
+    """Run the dispatcher until there is nothing left to wait for.
+
+    pysnmp's asyncio dispatcher runs its event loop until something stops
+    it, so stop it once no request is pending and the transport has sent
+    what was queued (an unconfirmed trap has no request to wait for).
+    """
+    dispatcher = snmpEngine.transportDispatcher
+    transport = dispatcher.getTransport(ctx["transportDomain"])
+
+    def stopWhenIdle():
+        lport = getattr(transport, "_lport", None)
+
+        if dispatcher.jobsArePending() or (lport is not None and not lport.done()):
+            dispatcher.loop.call_later(0.01, stopWhenIdle)
+
+        else:
+            dispatcher.loop.stop()
+
+    dispatcher.loop.call_soon(stopWhenIdle)
+
+    try:
+        dispatcher.runDispatcher()
+
+    finally:
+        dispatcher.closeDispatcher()

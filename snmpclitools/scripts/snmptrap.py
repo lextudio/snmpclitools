@@ -225,12 +225,14 @@ def generator(cbCtx, ast):
 def cbFun(snmpEngine, notificationHandle, errorIndication, pdu, cbCtx):
     if errorIndication:
         sys.stderr.write("%s\n" % errorIndication)
+        cbCtx["exitCode"] = 1
         return
 
     errorStatus = v2c.apiPDU.getErrorStatus(pdu)
     varBinds = v2c.apiPDU.getVarBinds(pdu)
 
     if errorStatus:
+        cbCtx["exitCode"] = 1
         errorIndex = v2c.apiPDU.getErrorIndex(pdu)
         sys.stderr.write(
             "%s at %s\n"
@@ -253,11 +255,11 @@ def cbFun(snmpEngine, notificationHandle, errorIndication, pdu, cbCtx):
 def start():
     snmpEngine = engine.SnmpEngine(OctetString(hexValue="8000000001020304"))
 
+    ctx = {}
+
     try:
         # Parse c/l into AST
         ast = Parser().parse(Scanner().tokenize(" ".join(sys.argv[1:])))
-
-        ctx = {}
 
         # Apply configuration to SNMP entity
         main.generator((snmpEngine, ctx), ast)
@@ -293,7 +295,7 @@ def start():
 
         sys.stdout.write("Press Ctrl-C to stop.\n")
 
-        snmpEngine.transportDispatcher.runDispatcher()
+        main.runDispatcher(snmpEngine, ctx)
 
     except KeyboardInterrupt:
         sys.stderr.write("Shutting down...\n")
@@ -309,3 +311,5 @@ def start():
             sys.stderr.write(line.replace("\n", ";"))
 
         sys.exit(1)
+
+    sys.exit(ctx.get("exitCode", 0))

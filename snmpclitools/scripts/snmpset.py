@@ -80,8 +80,10 @@ def cbFun(
 ):
     if errorIndication:
         sys.stderr.write("%s\n" % errorIndication)
+        cbCtx["exitCode"] = 1
 
     elif errorStatus:
+        cbCtx["exitCode"] = 1
         sys.stderr.write(
             "%s at %s\n"
             % (
@@ -103,11 +105,11 @@ def cbFun(
 def start():
     snmpEngine = engine.SnmpEngine()
 
+    ctx = {}
+
     try:
         # Parse c/l into AST
         ast = Parser().parse(Scanner().tokenize(" ".join(sys.argv[1:])))
-
-        ctx = {}
 
         # Apply configuration to SNMP entity
         main.generator((snmpEngine, ctx), ast)
@@ -129,7 +131,7 @@ def start():
 
         sys.stdout.write("Press Ctrl-C to stop.\n")
 
-        snmpEngine.transportDispatcher.runDispatcher()
+        main.runDispatcher(snmpEngine, ctx)
 
     except KeyboardInterrupt:
         sys.stderr.write("Shutting down...\n")
@@ -145,3 +147,5 @@ def start():
             sys.stderr.write(line.replace("\n", ";"))
 
         sys.exit(1)
+
+    sys.exit(ctx.get("exitCode", 0))

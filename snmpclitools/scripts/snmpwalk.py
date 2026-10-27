@@ -123,13 +123,16 @@ def cbFun(
     cbCtx,
 ):
     if errorIndication:
-        if errorIndication != "oidNotIncreasing" or not ctx.get(
+        if errorIndication != "oidNotIncreasing" or not cbCtx.get(
             "ignoreNonIncreasingOids"
         ):
             sys.stderr.write("Error: %s\n" % errorIndication)
+            cbCtx["exitCode"] = 1
             return
 
     if errorStatus:
+        if errorStatus != 2:  # noSuchName ends an SNMPv1 walk
+            cbCtx["exitCode"] = 1
         sys.stderr.write(
             "%s at %s\n"
             % (
@@ -197,7 +200,7 @@ def start():
 
         sys.stdout.write("Press Ctrl-C to stop.\n")
 
-        snmpEngine.transportDispatcher.runDispatcher()
+        main.runDispatcher(snmpEngine, ctx)
 
     except KeyboardInterrupt:
         sys.stderr.write("Shutting down...\n")
@@ -222,3 +225,5 @@ def start():
             "Total traversal time = %.4f seconds"
             "\n" % (time.time() - ctx["displayWallClock"])
         )
+
+    sys.exit(ctx.get("exitCode", 0))
